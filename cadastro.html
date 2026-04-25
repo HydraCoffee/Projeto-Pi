@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Cadastro </title>
+    <link rel="stylesheet" type="text/css" href="./css/cadastroLogin.css">
+</head>
+<body>
+    
+    <a href="./hydracoffee.html">
+    <img src="./img/logotipo.2.png" class="logo">
+    </a>
+    <div class="slogan">
+        <span>A cafeicultura inteligente começa aqui!</span>
+    </div>
+    <div class="container-principal">
+        <div class="container-form">
+            <h3>Cadastre-se</h3>
+            <form>
+                <input type="text" id="nome" placeholder="Nome:"><br><br>
+
+                <input type="email" id="email" placeholder="Email:"><br><br>
+
+                <input type="text" id="cnpj" placeholder="CNPJ:"><br><br>
+
+                <input type="password" id="senha" placeholder="Senha:"><br><br>
+
+                <input type="submit" value="Cadastrar" onclick="Cadastrar(); return false">
+
+            </form>
+        </div>
+    </div>
+
+</body>
+<script>
+    function Cadastrar(){
+        let nome = document.getElementById('nome').value;
+        let email = document.getElementById('email').value;
+        let cnpj = document.getElementById('cnpj').value;
+        let senha = document.getElementById('senha').value;
+
+        if(nome == 'admin' && cnpj == 'teste' && email == 'admin@gmail.com' && senha == 'admin1'){
+            alert("Usuario Cadastrado Com Sucesso!!");
+            location.href = "./login.html";
+        }else{
+            alert("Erro ao Cadastrar!!");
+        }
+    }
+
+
+
+</script>
+</html>

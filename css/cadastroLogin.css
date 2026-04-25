@@ -1,0 +1,69 @@
+body{
+    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("../img/photo-ground-texture-pattern.jpg");
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    height: 100vh;
+    margin: 0%;
+}
+
+.logo{
+    position: absolute;
+    left: 120px;
+    top: 20%;
+    width: 550px;
+}
+
+.slogan{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode';
+    font-size: 27px;
+    color: #8E991B;
+    position: absolute;
+    left: 170px;
+    top: 50%;
+    width: 500px;
+}
+
+.container-principal{
+    color: #FCFCF7;
+    width: 450px;
+    background-color: rgba(142, 153, 27, 0.6);
+    padding: 40px;
+    border-radius: 10px;
+    
+}
+
+.container-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+h3{
+    text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 32px;
+}
+
+input{
+    margin-bottom: 15px;
+    padding: 14px;
+    border-radius: 4px;
+    border: none;
+    font-size: 16px;
+}
+
+input[type="submit"]{
+    cursor: pointer;
+    color: #FCFCF7;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+    background-color: #393D0B;
+
+    display: block;
+    margin: 10px auto;
+}

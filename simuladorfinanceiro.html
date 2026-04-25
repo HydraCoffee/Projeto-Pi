@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="./css/calculadora.css">
+  </head>
+
+  <body>
+    <header>
+      <div class="logo-titulo">
+        <div class="Logo">
+          <a href="./hydracoffee.html">
+          <img src="./img/logotipo.2.png" alt="Logo">
+          </a>
+        </div>
+
+        <div class="titulo">
+          <h1>Simulador Financeiro</h1>
+        </div>
+      </div>
+
+      <h3 class="sub-titulo">Calcule a economia com a implantação do sistema de sensores na sua plantação de café: </h3>
+    
+    </header>
+    <div class="container-principal">
+        <div class="formulario">
+            <form id="form">
+               <h3> Área da plantação (em hectares): </h3>
+                <input type="text" id="ipt_areaplantacao"/>
+
+             <h3>  Produção de sacas anualmente: </h3>
+                <input type="text" id="ipt_sacasano"/>
+              
+                <div class="btn-calcular">
+                  <button type="button" onclick="mostrar()"> Calcular Economia com a Implantação do Sistema </button>
+                </div>
+
+                
+              </form>
+            </div>
+            <div id="div_msg"></div>
+          </div>
+          
+        </body>
+</html>
+<script>
+
+    function mostrar() {
+      let areaPlantacao = Number(ipt_areaplantacao.value);
+      let sacasAno = Number(ipt_sacasano.value);
+      let custoSensores = 10 * 10 * areaPlantacao; //Cada sensor custa em média 10 reais vezes 10 sensores por hectare
+      let gastoMedioAguaSaca = sacasAno * 1200000; //1kg de café gasta 20mil litros em sua produção, * 60=1200000, Fonte: cofeehabitat
+      let precoAguaAno = 0.00011 * gastoMedioAguaSaca; // 0.0001 é o custo em reais por litro de água em uma plantação, Fonte:IBGE
+      let precoAguaMes = precoAguaAno / 12; // preço da agua anual dividido pela quantidade de meses no ano
+      let tempoRetorno = custoSensores / precoAguaMes;
+      // 30% de economia de água após uso de sensores em plantações de café Fonte: Embrapa
+
+      if (areaPlantacao == 0 || sacasAno == 0) {
+  alert("Preencha todos os campos corretamente!");
+  div_msg.style.display = "none";
+} else {
+  div_msg.style.display = "block";
+  div_msg.innerHTML = `<br><b>Benefícios e efeitos</b><br> 
+  <p>Levando em consideração as ${sacasAno} sacas por ano, o gasto de água chega próximo de ${gastoMedioAguaSaca}L anualmente, <br>
+    quantidade essa poderia ser reduzida em até 30% com o uso dos sensores de umidade de solo, que auxiliam no <br> melhor manejo possível da água na sua plantação. 
+  Ou seja uma economia de até ${gastoMedioAguaSaca * 0.3}L e R$${precoAguaAno} de água desperdiçada.</p>
+
+  <p>Além de toda a economia de água e gastos, os sensores serão responsáveis por beneficiar a qualidade e produtividade em 
+  até 30% por hectare, ou seja, ${0.3 * sacasAno} sacas (ou ${0.3 * sacasAno * 60}kg) no total.</p>
+
+  <b>Custo de implantação dos sensores</b>
+  <p>Para a implantação do sistema de sensores será necessário um investimento de R$${100 * areaPlantacao}, 
+    com retorno em ${tempoRetorno.toFixed(1)} meses (${(tempoRetorno * 30).toFixed(0)} dias).</p>`;
+}
+}
+
+</script>
+<footer>
+  <b>Fontes:</b><br>
+  IBGE:
+  https://agenciadenoticias.ibge.gov.br/agencia-noticias/2012-agencia-de-noticias/noticias/37054-em-2020-para-cada-r-1-00-gerado-pela-economia-foram-consumidos-6-2-litros-de-agua? <br>
+    <b>IBGE (Consumo de água)</b>
+  <br>
+  Coffee Habitat:
+  https://www.coffeehabitat.com/2009/09/water-footprint-of-coffee/ <br>
+    <b>Water footprint of coffee</b>
+  <br>
+  Embrapa:
+  https://www.embrapa.br/busca-de-noticias/-/noticia/18010198/nova-tecnologia-aumenta-qualidade-do-cafe <br>
+    <b>Tecnologia no café</b>
+</footer>
