@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Login </title>
+    <link rel="stylesheet" type="text/css" href="./css/cadastroLogin.css">
+</head>
+<body>
+    
+    <img src="./img/logotipo.2.png" class="logo">
+    
+    <div class="slogan">
+        <span>A cafeicultura inteligente começa aqui!</span>
+    </div>
+    <div class="container-principal">
+        <div class="container-form">
+            <h3>Login</h3>
+            <form>
+
+                <input type="email" id="email_input" placeholder="Email:"><br><br>
+
+                <input type="password" id="senha_input" placeholder="Senha:"><br><br>
+
+                <input type="codigo" id="codigo_input" placeholder="Código:"><br><br>
+
+                <input type="submit" value="Logar" onclick="entrar();"> 
+
+            </form>
+        </div>
+    </div>
+
+
+
+</body>
+
+</html>
+
+<script>
+
+
+    function entrar() {
+
+        var emailVar = email_input.value;
+        var senhaVar = senha_input.value;
+        var codigoVar = codigo_input.value;
+
+        console.log(emailVar)
+        console.log(senhaVar)
+        console.log(codigoVar)
+
+
+        if (codigoVar == 'HYDRAN3' && emailVar == 'admin@gmail.com' && senhaVar == 'admin1') {
+
+            window.location = "/home/aluno/Downloads/web-data-viz/BobIA/public/index.html";
+
+        } 
+
+    }
+
+</script>

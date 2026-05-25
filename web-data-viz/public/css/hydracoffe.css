@@ -1,0 +1,171 @@
+body {
+background: url("../img/delicious-organic-coffee-still-life.jpg") no-repeat center center/cover;    z-index: -2;
+font-family: Arial, sans-serif;
+margin: 0;
+background-color: #f4f4f4;
+line-height: 1.6;
+}
+
+header {
+display: flex;
+background-color: #703618;
+color: white;
+padding: 10px 40px;
+height: 140px;
+align-items: center;
+justify-content: space-between;
+}
+
+.Cadastro h3{
+color: white;
+display: inline-flex;
+text-align: left;
+align-items: center;
+margin-left: 2%;
+font-size: 20px;
+white-space: nowrap;
+cursor: pointer;
+position: relative;
+padding-bottom: 5px;
+transition: color 0.3s ease;
+
+}
+.Cadastro h3:hover{
+    color: #8E991B;
+    transition: 0.5s ease;
+    cursor: pointer;
+}
+
+.Cadastro h3::after{
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  left: 0;
+  bottom: 0;
+  background: #8E991B;
+  transition: width 0.3s ease;
+}
+
+.Cadastro h3:hover::after{
+    width: 100%;
+}
+
+.Logo{
+display: flex;
+align-items: center;
+width: 100%;
+}
+
+.Logo img{
+display: flex;
+width: 350px;
+height: auto;
+}
+
+.Logo p{
+display: flex;
+text-align: center;
+align-items: center;
+margin-left: 22%;
+font-size: 20px;
+}
+
+.card:hover{
+box-shadow: 3px 3px 10px 5px rgb(59, 59, 59);
+transition: 0.3s all;
+transform: scale(1.1);
+}
+
+nav {
+background-color: #4f2611;
+padding: 10px;
+text-align: center;
+}
+
+nav a {
+color: white;
+margin: 0 15px;
+text-decoration: none;
+font-weight: bold;
+cursor: pointer;
+transition: color 0.3s ease;
+padding-bottom: 5px;
+position: relative;
+
+}
+
+nav a:hover{
+color: #8E991B;
+transition: 0.5s ease;
+cursor: pointer;
+}
+
+nav a:hover::after{
+    width: 100%;
+}
+
+nav a::after{
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  left: 0;
+  bottom: 0;
+  background: #8E991B;
+  transition: width 0.3s ease;
+}
+
+
+.section {
+padding: 40px;
+max-width: 1200px;
+margin: auto;
+}
+
+.card {
+background: #8E991B;
+color: white;
+width: 100%;
+padding: 25px;
+margin: 20px 0;
+border-radius: 10px;
+box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+transition: transform 0.3s ease;
+}
+
+h2 {
+color: white;
+}
+
+.lista {
+margin-top: 15px;
+}
+
+.item {
+margin-bottom: 10px;
+}
+
+button {
+background-color: #666e14;
+color: white;
+border: none;
+padding: 15px 20px;
+cursor: pointer;
+border-radius: 5px;
+font-size: 16px;
+margin-top: 15px;
+}
+
+
+button:hover {
+background-color: #4c520e;
+}
+
+footer {
+background-color: #703618;
+color: white;
+text-align: center;
+padding: 15px;
+margin-top: 20px;
+}

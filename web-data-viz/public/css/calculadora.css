@@ -1,0 +1,151 @@
+body{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    position: relative;
+    z-index: 0;
+}
+
+body::before{
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("../img/delicious-organic-coffee-still-life.jpg") no-repeat center center/cover;    z-index: -2;
+}
+
+body::after{
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background-color: rgba(245, 240, 230, 0.85);
+
+    z-index: -1;
+}
+
+header{
+    display: flex;
+    background-color: #703618;
+    padding: 15px 35px;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 100px;
+    position: relative;
+}
+
+.Logo img{
+    display: flex;
+    width: 200px;
+    margin-right: 100px;
+    margin-top: -20px;
+}
+
+.logo-titulo{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.titulo h1{
+    margin: 0;
+    margin-top: -20px;
+    color: white;
+}
+
+.sub-titulo{
+    text-align: center;
+    left: 50%;
+    position: absolute;
+    transform: translateX(-50%);
+    color: white;
+    font-size: 15px;
+    max-width: 500px;
+}
+
+.container-principal{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; 
+    gap: 30px; 
+    padding: 20px;
+}
+
+.formulario{
+    display: flex;
+    background-color: #3e430b;
+    padding: 30px;
+    width: 330px;
+    min-height: 400px;
+    height: auto;
+    border-radius: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form h3{
+    margin: 0;
+    margin-bottom: 10px;
+    text-align: center;
+    color: white;
+}
+
+input[type="text"]{
+    width: 280px;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    height: 30px;
+}
+
+.btn-calcular button{
+    width: 300px;
+    padding: 10px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 30px;
+    border-radius: 15px;
+    background-color: #703618;
+    color: white;
+}
+
+button:hover{
+    background-color: #8E991B; 
+    transition: 0.3s ease;
+}
+
+#div_msg {
+    display: none;
+    width: 700px;
+    padding: 20px;
+    line-height: 1.6;
+    background-color: white;
+    border-radius: 10px;
+    border-left: 5px solid #8E991B;
+}
+
+footer{
+    background-color: #703618;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-size: 11px;
+}
