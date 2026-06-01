@@ -1,134 +1,310 @@
 <!DOCTYPE html>
-<html lang="pt-Br">
-
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>dashboardPI</title>
+    <title>HydraCoffe – Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/dashboard.css">
 </head>
+<body>
 
+<aside class="sidebar">
+    <div class="sidebar-logo">HydraCoffe</div>
 
+    <nav class="sidebar-nav">
 
-<body class="body">
-    <div class="janela">
-        <div class="header-left">
-            <h1>Hydracoffe</h1>
-
-            <div class="hello">
-                <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
+        <div class="hello">
+                <h3>Olá, <span id="b_usuario">Usuário</span>!</h3>
             </div>
 
-            <div class="btn-nav">
-                <h3>Geral</h3>
-            </div>
+        <button class="nav-item ativo" onclick="mostrarPagina('geral')">
+            Medição Geral
+        </button>
 
-            <div class="btn-nav">
-            <details>
-                <summary>Clique aqui para ver as opções</summary>
-                <div>
-                <ul>
-                    <br>
-                    <a href="hec1.html">1° Hectare</a> <br><br>
-                    <a href="hec2.html">2° Hectare</a> <br><br>
-                    <a href="hec3.html">3° Hectare</a> <br><br>
-                </ul>
-                </div>
-            </details>
-            </div>
-            
+        <button class="nav-item" onclick="toggleSubmenu()">
+            Hectares
+            <span id="setaHectares">▶</span>
+        </button>
 
-
-            <div class="btn-logout" onclick="limparSessao()">
-                <h3>Sair</h3>
-            </div>
-
+        <!-- Os botões dos hectares aparecem aqui quando o usuário clica em "Hectares" -->
+        <div id="submenuHectares" class="submenu">
+            <!-- Gerado automaticamente pelo JS com base no array "hectares" lá embaixo -->
         </div>
-        <div class="container">
-            <h1 class="text1" style="text-align: center;">Dashboard:</h1> <br><br>
 
-            <div class="kpi-box">
-                <div class="kpi-card text">
-                    <span class="tituloKpi">20%</span> <br>
-                    da sua plantação está com a umidade abaixo do ideal
-                </div>
-                <div class="kpi-card text">
-                    <span class="tituloKpi">90%</span> <br>
-                    dos seus sensores estão funcionando corretamente
-                </div>
-                <div class="kpi-card text">
+        <button class="nav-item">
+            Sair
+        </button>
+    </nav>
 
-                </div>
+    <div class="sidebar-footer">v1.0 · HydraCoffe</div>
+</aside>
 
-            </div>
-            <div class="graficos">
-                <div>
-                    <canvas id="myChart" class="dashboard-container"></canvas>
-                </div>
-
-                <div>
-                    <canvas id="mySecondChart" class="dashboard-container"></canvas>
-                </div>
-            </div>
+<main class="conteudo">
+    <div class="page-header">
+        <div>
+            <h2 id="tituloPagina"></h2>
+            <p class="page-subtitulo" id="subtituloPagina"></p>
         </div>
-        <script>
+        <span class="data-hora" id="dataHora"></span>
+    </div>
+
+    <div class="status-bar">
+        <div class="status-dot"></div>
+        Última leitura às <span id="ultimaLeitura">--:--</span>
+    </div>
+
+    <div class="kpi-grid" id="kpiGrid"></div>
+
+    <div class="graficos-grid">
+        <div class="grafico-card">
+            <div class="grafico-titulo">Umidade ao Longo do Dia</div>
+            <div class="grafico-subtitulo">Meta: 60%</div>
+            <canvas id="graficoHora"></canvas>
+        </div>
+        <div class="grafico-card">
+            <div class="grafico-titulo">Umidade Média Mensal</div>
+            <div class="grafico-subtitulo">Últimos 5 meses</div>
+            <canvas id="graficoMes"></canvas>
+        </div>
+    </div>
+</main>
 
 
+<script>
 
-            const data1 = {
-                labels: ['13:00', '13:30', '14:00', '14:30'],
-                datasets: [{
+     b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
+/* ==========================================================
+   DADOS
+   Aqui ficam todos os dados do dashboard.
+
+   Quando você conectar ao banco de dados, vai substituir
+   esses valores por uma chamada assim:
+       const resposta = await fetch('https://sua-api.com/dados');
+       const paginas  = await resposta.json();
+       const hectares = await fetch('...').then(r => r.json());
+
+   O resto do código não precisa mudar.
+========================================================== */
+
+// Dados da página principal
+const paginaGeral = {
+    titulo:    "Medição Geral",
+    subtitulo: "Visão geral de todas as zonas monitoradas",
+    kpis: [
+        { label: "Umidade Abaixo do Ideal", valor: "20%",  descricao: "da plantação precisa de atenção",       tipo: "alerta" },
+        { label: "Sensores Operacionais",   valor: "90%",  descricao: "funcionando corretamente",              tipo: "ok"     },
+        { label: "Último Alerta",           valor: "Maio", descricao: "mês desde o último alerta",                 tipo: "alerta" },
+        { label: "Áreas Monitoradas",       valor: "1",    descricao: "hectare(s) ativo(s) no sistema",               tipo: "ok"     }
+    ],
+    graficoHora: {
+        horas:   ['13:00', '13:30', '14:00', '14:30'],
+        valores: [50, 65, 70, 55],
+        meta:    60
+    },
+    graficoMes: {
+        meses:   ['Jan', 'Fev', 'Mar', 'Abr', 'Mai'],
+        valores: [65, 45, 60, 70, 65]
+    }
+};
+
+// Dados de cada hectare — para adicionar um novo hectare,
+// basta copiar um bloco desses e colar logo abaixo com novos valores.
+const hectares = [
+    {
+        id:       "hectare1",
+        nome:     "Hectare 1 · Zona Norte",
+        subtitulo: "Monitoramento da Zona Norte",
+        kpis: [
+            { label: "Umidade Atual",    valor: "58%",   descricao: "levemente abaixo da meta",  tipo: "alerta" },
+            { label: "Último Alerta",    valor: "Maio",  descricao: "mês desde o último alerta", tipo: "alerta" },
+            { label: "Última Irrigação", valor: "2h",    descricao: "atrás",                     tipo: "neutro" },
+            { label: "Status",           valor: "OK",    descricao: "hectare operacional",        tipo: "ok"     }
+        ],
+        graficoHora: { horas: ['13:00','13:30','14:00','14:30'], valores: [55,58,60,57], meta: 60 },
+        graficoMes:  { meses: ['Jan','Fev','Mar','Abr','Mai'],   valores: [60,50,62,68,58] }
+    },
+    {
+        id:       "hectare2",
+        nome:     "Hectare 2 · Zona Sul",
+        subtitulo: "Monitoramento da Zona Sul",
+        kpis: [
+            { label: "Umidade Atual",    valor: "72%",   descricao: "acima da meta — atenção",   tipo: "alerta" },
+            { label: "Último Alerta",    valor: "Dezembro", descricao: "mês desde o último alerta",  tipo: "alerta" },
+            { label: "Última Irrigação", valor: "30min", descricao: "atrás",                     tipo: "neutro" },
+            { label: "Status",           valor: "OK",    descricao: "hectare operacional",        tipo: "ok"     }
+        ],
+        graficoHora: { horas: ['13:00','13:30','14:00','14:30'], valores: [68,72,74,71], meta: 60 },
+        graficoMes:  { meses: ['Jan','Fev','Mar','Abr','Mai'],   valores: [70,68,65,72,73] }
+    },
+    {
+        id:       "hectare3",
+        nome:     "Hectare 3 · Estufa A",
+        subtitulo: "Monitoramento da Estufa A",
+        kpis: [
+            { label: "Umidade Atual",    valor: "45%",   descricao: "abaixo do ideal",           tipo: "alerta" },
+            { label: "Último Alerta",    valor: "Junho", descricao: "mês desde o último alerta",  tipo: "alerta" },
+            { label: "Última Irrigação", valor: "5h",    descricao: "atrás — necessário agir",   tipo: "alerta" },
+            { label: "Status",           valor: "FALHA", descricao: "verificar conexão",         tipo: "alerta" }
+        ],
+        graficoHora: { horas: ['13:00','13:30','14:00','14:30'], valores: [50,47,44,45], meta: 60 },
+        graficoMes:  { meses: ['Jan','Fev','Mar','Abr','Mai'],   valores: [55,50,48,44,45] }
+    }
+];
+
+
+/* ==========================================================
+   SUBMENU
+   Cria um botão na sidebar para cada hectare da lista acima.
+========================================================== */
+
+// Para cada hectare, cria um botão e adiciona dentro do submenu
+hectares.forEach(function(hectare) {
+    const botao = document.createElement('button');
+    botao.className   = 'nav-item submenu-item';
+    botao.textContent = hectare.nome;
+    botao.onclick     = function() { mostrarPagina(hectare.id); };
+    document.getElementById('submenuHectares').appendChild(botao);
+});
+
+// Abre e fecha o submenu ao clicar em "Hectares"
+function toggleSubmenu() {
+    const submenu = document.getElementById('submenuHectares');
+    const seta    = document.getElementById('setaHectares');
+
+    if (submenu.classList.contains('aberto')) {
+        submenu.classList.remove('aberto');
+        seta.textContent = '▶';
+    } else {
+        submenu.classList.add('aberto');
+        seta.textContent = '▼';
+    }
+}
+
+
+/* ==========================================================
+   GRÁFICOS
+   Guardamos as instâncias para poder destruí-las antes
+   de criar novas (requisito do Chart.js).
+========================================================== */
+let grafico1 = null;
+let grafico2 = null;
+
+
+/* ==========================================================
+   MOSTRAR PÁGINA
+   Função principal: recebe um id ('geral' ou o id de um
+   hectare), pega os dados certos e atualiza toda a tela.
+========================================================== */
+function mostrarPagina(id) {
+
+    // 1. Decide quais dados usar
+    let dados;
+    if (id === 'geral') {
+        dados = paginaGeral;
+    } else {
+        // Procura o hectare cujo .id é igual ao que foi clicado
+        dados = hectares.find(function(s) { return s.id === id; });
+    }
+
+    // 2. Atualiza título e subtítulo
+    document.getElementById('tituloPagina').textContent    = dados.titulo || dados.nome;
+    document.getElementById('subtituloPagina').textContent = dados.subtitulo;
+
+    // 3. Reconstrói os KPI cards
+    const kpiGrid = document.getElementById('kpiGrid');
+    kpiGrid.innerHTML = ''; // Limpa os cards antigos
+    dados.kpis.forEach(function(kpi) {
+        kpiGrid.innerHTML +=
+            '<div class="kpi-card ' + kpi.tipo + '">' +
+                '<span class="kpi-label">'  + kpi.label    + '</span>' +
+                '<span class="kpi-valor">'  + kpi.valor    + '</span>' +
+                '<span class="kpi-desc">'   + kpi.descricao + '</span>' +
+            '</div>';
+    });
+
+    // 4. Destroi os gráficos antigos para poder criar novos no mesmo canvas
+    if (grafico1) grafico1.destroy();
+    if (grafico2) grafico2.destroy();
+
+    // 5. Cria o gráfico de barras (umidade por hora)
+    grafico1 = new Chart(document.getElementById('graficoHora'), {
+        data: {
+            labels: dados.graficoHora.horas,
+            datasets: [
+                {
                     type: 'bar',
-                    label: 'Umidade Média',
-                    data: [50, 65, 70, 55],
-                    borderColor: 'rgb(112, 137, 24)',
-                    backgroundColor: 'rgba(73, 88, 15, 0.8)'
-                }, {
+                    label: 'Umidade (%)',
+                    data: dados.graficoHora.valores,
+                    backgroundColor: 'rgba(112, 137, 24, 0.75)',
+                    borderRadius: 6
+                },
+                {
                     type: 'line',
-                    label: 'Meta de Umidade',
-                    data: [60, 60, 60, 60],
-                    fill: false,
-                    borderColor: 'rgb(54, 162, 235)',
-                    tension: 0.9
-                }]
-            };
-
-            const config1 = {
-                type: 'bar',
-                data: data1,
-                options: { scales: { y: { beginAtZero: true } } }
-            };
-
-            new Chart(document.getElementById('myChart'), config1);
-
-
-
-            const data2 = {
-                labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai'],
-                datasets: [{
-                    label: 'Umidade Média por Mês',
-                    data: [65, 45, 60, 70, 65],
-                    borderColor: 'rgb(54, 162, 235)',
-                    backgroundColor: 'rgba(54, 162, 235, 0.4)',
-                    fill: true,
-                    tension: 0.4
-                }]
-            };
-
-            const config2 = {
-                type: 'line',
-                data: data2,
-                options: {
-                    scales: {
-                        y: { beginAtZero: true }
-                    }
+                    label: 'Meta',
+                    // Repete o valor da meta para cada hora, criando uma linha reta
+                    data: dados.graficoHora.horas.map(function() { return dados.graficoHora.meta; }),
+                    borderColor: '#e07b39',
+                    borderDash: [6, 4],
+                    pointRadius: 0,
+                    fill: false
                 }
-            };
+            ]
+        },
+        options: {
+            scales: {
+                y: { beginAtZero: true, max: 100 },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    // 6. Cria o gráfico de linha (umidade mensal)
+    grafico2 = new Chart(document.getElementById('graficoMes'), {
+        type: 'line',
+        data: {
+            labels: dados.graficoMes.meses,
+            datasets: [{
+                label: 'Umidade Média (%)',
+                data: dados.graficoMes.valores,
+                borderColor: '#49580f',
+                backgroundColor: 'rgba(112, 137, 24, 0.15)',
+                fill: true,
+                tension: 0.4,
+                pointRadius: 5
+            }]
+        },
+        options: {
+            scales: {
+                y: { beginAtZero: true, max: 100 },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+}
 
 
-            new Chart(document.getElementById('mySecondChart'), config2);
-        </script>
+/* ==========================================================
+   RELÓGIO — atualiza o horário no cabeçalho a cada minuto
+========================================================== */
+function atualizarRelogio() {
+    const agora = new Date();
+    document.getElementById('dataHora').textContent =
+        agora.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' })
+        + ' · ' + agora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    document.getElementById('ultimaLeitura').textContent =
+        agora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+}
+atualizarRelogio();
+setInterval(atualizarRelogio, 60000);
+
+
+/* ==========================================================
+   INICIALIZAÇÃO — carrega a página geral ao abrir
+========================================================== */
+mostrarPagina('geral');
+</script>
+
 </body>
-
 </html>
