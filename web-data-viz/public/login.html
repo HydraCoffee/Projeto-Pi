@@ -24,7 +24,7 @@
 
                 <input type="codigo" id="codigo_input" placeholder="Código:"><br><br>
 
-                <input type="submit" value="Logar" onclick="entrar();"> 
+                <input type="button" value="Logar" onclick="entrar(event);"> 
 
             </form>
         </div>
@@ -39,22 +39,20 @@
 <script>
 
 
-    function entrar() {
+    function entrar(event) {
+        event.preventDefault();
 
         var emailVar = email_input.value;
         var senhaVar = senha_input.value;
         var codigoVar = codigo_input.value;
 
-        console.log(emailVar)
-        console.log(senhaVar)
-        console.log(codigoVar)
-
-
         if (codigoVar == 'HYDRAN3' && emailVar == 'admin@gmail.com' && senhaVar == 'admin1') {
+            alert("Bem Vindo N3!!");
+            window.location = "./bobia.html";
 
-            window.location = "/home/aluno/Downloads/web-data-viz/BobIA/public/index.html";
-
-        } 
+        }else{
+            alert("Dados Incorretos!!");
+        }
 
     }
 
