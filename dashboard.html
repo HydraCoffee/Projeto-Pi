@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-Br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dashboardPI</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="./css/dashboard.css">
+</head>
+
+
+
+<body class="body">
+    <div class="janela">
+        <div class="header-left">
+            <h1>Hydracoffe</h1>
+
+            <div class="hello">
+                <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
+            </div>
+
+            <div class="btn-nav">
+                <h3>Geral</h3>
+            </div>
+
+            <div class="btn-nav">
+            <details>
+                <summary>Clique aqui para ver as opções</summary>
+                <div>
+                <ul>
+                    <br>
+                    <a href="hec1.html">1° Hectare</a> <br><br>
+                    <a href="hec2.html">2° Hectare</a> <br><br>
+                    <a href="hec3.html">3° Hectare</a> <br><br>
+                </ul>
+                </div>
+            </details>
+            </div>
+            
+
+
+            <div class="btn-logout" onclick="limparSessao()">
+                <h3>Sair</h3>
+            </div>
+
+        </div>
+        <div class="container">
+            <h1 class="text1" style="text-align: center;">Dashboard:</h1> <br><br>
+
+            <div class="kpi-box">
+                <div class="kpi-card text">
+                    <span class="tituloKpi">20%</span> <br>
+                    da sua plantação está com a umidade abaixo do ideal
+                </div>
+                <div class="kpi-card text">
+                    <span class="tituloKpi">90%</span> <br>
+                    dos seus sensores estão funcionando corretamente
+                </div>
+                <div class="kpi-card text">
+
+                </div>
+
+            </div>
+            <div class="graficos">
+                <div>
+                    <canvas id="myChart" class="dashboard-container"></canvas>
+                </div>
+
+                <div>
+                    <canvas id="mySecondChart" class="dashboard-container"></canvas>
+                </div>
+            </div>
+        </div>
+        <script>
+
+
+
+            const data1 = {
+                labels: ['13:00', '13:30', '14:00', '14:30'],
+                datasets: [{
+                    type: 'bar',
+                    label: 'Umidade Média',
+                    data: [50, 65, 70, 55],
+                    borderColor: 'rgb(112, 137, 24)',
+                    backgroundColor: 'rgba(73, 88, 15, 0.8)'
+                }, {
+                    type: 'line',
+                    label: 'Meta de Umidade',
+                    data: [60, 60, 60, 60],
+                    fill: false,
+                    borderColor: 'rgb(54, 162, 235)',
+                    tension: 0.9
+                }]
+            };
+
+            const config1 = {
+                type: 'bar',
+                data: data1,
+                options: { scales: { y: { beginAtZero: true } } }
+            };
+
+            new Chart(document.getElementById('myChart'), config1);
+
+
+
+            const data2 = {
+                labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai'],
+                datasets: [{
+                    label: 'Umidade Média por Mês',
+                    data: [65, 45, 60, 70, 65],
+                    borderColor: 'rgb(54, 162, 235)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.4)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            };
+
+            const config2 = {
+                type: 'line',
+                data: data2,
+                options: {
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            };
+
+
+            new Chart(document.getElementById('mySecondChart'), config2);
+        </script>
+</body>
+
+</html>
