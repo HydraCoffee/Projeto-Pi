@@ -1,5 +1,8 @@
+html{
+  scroll-behavior: smooth;
+}
+
 body {
-background: url("../img/delicious-organic-coffee-still-life.jpg") no-repeat center center/cover;    z-index: -2;
 font-family: Arial, sans-serif;
 margin: 0;
 background-color: #f4f4f4;
@@ -10,33 +13,45 @@ header {
 display: flex;
 background-color: #703618;
 color: white;
-padding: 10px 40px;
-height: 140px;
+padding: 0px 40px;
+height: 70px;
 align-items: center;
 justify-content: space-between;
+position: sticky;
+top: 0;
+z-index: 1000;
 }
 
-.Cadastro h3{
+.Cadastro a{
 color: white;
 display: inline-flex;
 text-align: left;
 align-items: center;
 margin-left: 2%;
-font-size: 20px;
+font-size: 18px;
 white-space: nowrap;
 cursor: pointer;
 position: relative;
 padding-bottom: 5px;
 transition: color 0.3s ease;
-
+text-decoration: none;
 }
-.Cadastro h3:hover{
+
+.Cadastro{
+  flex: 1;
+  display: flex;
+  gap: 55px;
+  justify-content: flex-end;
+}
+
+
+.Cadastro a:hover{
     color: #8E991B;
     transition: 0.5s ease;
     cursor: pointer;
 }
 
-.Cadastro h3::after{
+.Cadastro a::after{
   content: "";
   position: absolute;
   width: 0;
@@ -47,19 +62,67 @@ transition: color 0.3s ease;
   transition: width 0.3s ease;
 }
 
-.Cadastro h3:hover::after{
+.btn-hero{
+  display: inline-block;
+  background-color: #703618;
+  padding: 13px 30px;
+  border-radius: 5px;
+  text-decoration: none;
+  color: black;
+  font-size: 18px;
+  transition: 0.3s;
+}
+
+.btn-hero:hover{
+  background-color: #8E991B;
+  transform: scale(1.05);
+  color: white;
+}
+
+
+
+.Cadastro a:hover::after{
     width: 100%;
 }
 
-.Logo{
-display: flex;
-align-items: center;
-width: 100%;
+.hero{
+    height: 90vh;
+    background:
+    linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url("../img/tina-guina-obV_LM0KjxY-unsplash.jpg");
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
+
+.hero-content{
+    color: white;
+}
+
+.hero-content h1{
+    font-size: 4rem;
+    margin-bottom: 10px;
+}
+
+.hero-content p{
+    font-size: 1.5rem;
+    margin-bottom: 25px;
+}
+
+
+
+.Logo{
+  flex: 1;
+    display:flex;
+    align-items:center;
+}
+
 
 .Logo img{
 display: flex;
-width: 350px;
+width: 200px;
 height: auto;
 }
 
@@ -67,7 +130,7 @@ height: auto;
 display: flex;
 text-align: center;
 align-items: center;
-margin-left: 22%;
+margin-left: 20px;
 font-size: 20px;
 }
 
@@ -77,10 +140,71 @@ transition: 0.3s all;
 transform: scale(1.1);
 }
 
+.barra{
+    margin-top: 3px;
+    width: 1px;
+    height: 20px;
+    background-color: white;
+}
+.titulo-sessao{
+      text-align: center;
+    color: #703618;
+    font-size: 40px;
+    margin-bottom: 50px;
+    position: relative;
+}
+
+.titulo-sessao::after{
+    content: "";
+    display: block;
+    width: 100px;
+    height: 4px;
+    background-color: #8E991B;
+    margin: 10px auto 0;
+    border-radius: 10px;
+}
+
+
+.sobre{
+  background-color: #f8f5f0;
+  padding: 80px 40px;
+}
+
+.sobre-texto{
+    flex: 1;
+        color: #333;
+    font-size: 18px;
+    line-height: 1.8;
+}
+
+.sobre-imagem{
+    flex: 1;
+}
+
+.sobre-imagem img{
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,.2);
+}
+
+.sobre-container{
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 60px;
+}
+
+
 nav {
-background-color: #4f2611;
+  display: flex;
+background: none;
+flex: 2;
 padding: 10px;
 text-align: center;
+gap: 20px;
+justify-content: flex-end;
+margin-left: 300px;
 }
 
 nav a {
