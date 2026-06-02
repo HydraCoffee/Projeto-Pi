@@ -1,62 +1,101 @@
--- Arquivo de apoio, caso você queira criar tabelas como as aqui criadas para a API funcionar.
--- Você precisa executar os comandos no banco de dados para criar as tabelas,
--- ter este arquivo aqui não significa que a tabela em seu BD estará como abaixo!
-
-/*
-comandos para mysql server
-*/
-
-CREATE DATABASE aquatech;
-
-USE aquatech;
+CREATE DATABASE hydraCoffee;
+USE hydraCoffee;
 
 CREATE TABLE empresa (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	razao_social VARCHAR(50),
-	cnpj CHAR(14),
-	codigo_ativacao VARCHAR(50)
+    idEmpresa INT PRIMARY KEY AUTO_INCREMENT,
+    razaoSocial VARCHAR(45) NOT NULL,
+    cnpj CHAR(14) NOT NULL,
+    nomeFantasia VARCHAR(45) NOT NULL
 );
 
-CREATE TABLE usuario (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	nome VARCHAR(50),
-	email VARCHAR(50),
-	senha VARCHAR(50),
-	fk_empresa INT,
-	FOREIGN KEY (fk_empresa) REFERENCES empresa(id)
+CREATE TABLE funcionario (
+    idFuncionario INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(45) NOT NULL,
+    email VARCHAR(60) NOT NULL,
+    senha VARCHAR(45) NOT NULL,
+    fkEmpresa INT NOT NULL,
+    CONSTRAINT fkFunEmpresa FOREIGN KEY (fkEmpresa) 
+    REFERENCES empresa(idEmpresa)
 );
 
-CREATE TABLE aviso (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	titulo VARCHAR(100),
-	descricao VARCHAR(150),
-	fk_usuario INT,
-	FOREIGN KEY (fk_usuario) REFERENCES usuario(id)
+CREATE TABLE endereco (
+    idEndereco INT PRIMARY KEY AUTO_INCREMENT,
+    descricao VARCHAR(200),
+    latitude DECIMAL(10,8),
+    longitude DECIMAL(11,8),
+    fkEmpresa INT NOT NULL,
+    CONSTRAINT fkEndEmpresa FOREIGN KEY (fkEmpresa) 
+    REFERENCES empresa(idEmpresa)
 );
 
-create table aquario (
-/* em nossa regra de negócio, um aquario tem apenas um sensor */
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	descricao VARCHAR(300),
-	fk_empresa INT,
-	FOREIGN KEY (fk_empresa) REFERENCES empresa(id)
+CREATE TABLE setor (
+    idSetor INT PRIMARY KEY AUTO_INCREMENT,
+    regiao VARCHAR(15),
+    CONSTRAINT chkRegiao CHECK (regiao IN ('Norte', 'Sul', 'Leste', 'Oeste')),
+    fkEmpresa INT NOT NULL,
+    CONSTRAINT fkSetEmpresa FOREIGN KEY (fkEmpresa) 
+    REFERENCES empresa(idEmpresa)
 );
 
-/* esta tabela deve estar de acordo com o que está em INSERT de sua API do arduino - dat-acqu-ino */
-
-create table medida (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	dht11_umidade DECIMAL,
-	dht11_temperatura DECIMAL,
-	luminosidade DECIMAL,
-	lm35_temperatura DECIMAL,
-	chave TINYINT,
-	momento DATETIME,
-	fk_aquario INT,
-	FOREIGN KEY (fk_aquario) REFERENCES aquario(id)
+CREATE TABLE sensor (
+    idsensor INT PRIMARY KEY AUTO_INCREMENT,
+    statusSensor VARCHAR(45),
+    CONSTRAINT chkStatusSensor CHECK (statusSensor IN ('Danificado', 'Em manutenção', 'Funcionando')),
+    talhao VARCHAR(45),
+    fila INT,
+    planta INT,
+    fkSetor INT NOT NULL,
+    CONSTRAINT fkSenSetor FOREIGN KEY (fkSetor)
+    REFERENCES setor(idSetor)
 );
 
-insert into empresa (razao_social, codigo_ativacao) values ('Empresa 1', 'ED145B');
-insert into empresa (razao_social, codigo_ativacao) values ('Empresa 2', 'A1B2C3');
-insert into aquario (descricao, fk_empresa) values ('Aquário de Estrela-do-mar', 1);
-insert into aquario (descricao, fk_empresa) values ('Aquário de Peixe-dourado', 2);
+CREATE TABLE medicao (
+    idMedicao INT PRIMARY KEY AUTO_INCREMENT,
+    umidade INT NOT NULL,
+    dtHrMedicao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    fkSensor INT NOT NULL,
+    CONSTRAINT fkMedSensor FOREIGN KEY (fkSensor) 
+    REFERENCES sensor(idsensor)
+);
+
+CREATE TABLE alerta (
+    idAlerta INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(45),
+    dtHrAlerta TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    statusAlerta VARCHAR(45),
+    CONSTRAINT chkStatusAlerta CHECK (statusAlerta IN ('Normal', 'Alerta')),
+    fkMedicao INT NOT NULL,
+    CONSTRAINT fkAleMedicao FOREIGN KEY (fkMedicao) 
+    REFERENCES medicao(idMedicao)
+); 
+
+insert into medicao (fkSensor) values 
+(1),
+(2),
+(3),
+(4),
+(5),
+(6),
+(7),
+(8),
+(9),
+(10);
+
+ALTER TABLE medicao ALTER COLUMN fkSensor SET DEFAULT 1;
+
+USE hydraCoffee;
+
+-- 1. Empresa
+INSERT INTO empresa (razaoSocial, cnpj, nomeFantasia) 
+VALUES ('Empresa Teste', '00000000000000', 'HydraCoffee');
+
+-- 2. Setor (depende de empresa)
+INSERT INTO setor (regiao, fkEmpresa) 
+VALUES ('Norte', 1);
+
+-- 3. Sensor (depende de setor)
+INSERT INTO sensor (statusSensor, talhao, fila, planta, fkSetor) 
+VALUES ('Funcionando', 'Talhao A', 1, 1, 1);
+
+-- Verifique se o sensor foi criado com id=1
+SELECT * FROM medicao;

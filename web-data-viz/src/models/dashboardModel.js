@@ -1,4 +1,3 @@
-const { buscarDadosHectare } = require("../controllers/dashboardController");
 var database = require("../database/config");
 
 function buscarDadosGerais(idEmpresa) {
