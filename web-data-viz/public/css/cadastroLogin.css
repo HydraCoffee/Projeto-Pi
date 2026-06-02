@@ -1,69 +1,196 @@
-body{
-    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("../img/photo-ground-texture-pattern.jpg");
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    justify-content: end;
-    align-items: center;
-    height: 100vh;
-    margin: 0%;
+@import url('https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Rubik+Dirt&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Barlow', Arial, sans-serif;
 }
 
-.logo{
-    position: absolute;
-    left: 120px;
-    top: 20%;
-    width: 550px;
+body {
+  min-height: 100vh;
+  background-color: #111;
+  background-image: url("../img/fundoLogin.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
-.slogan{
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode';
-    font-size: 27px;
-    color: #8E991B;
-    position: absolute;
-    left: 170px;
-    top: 50%;
-    width: 500px;
+/* PÁGINA PRINCIPAL */
+
+.pagina-login {
+  width: 100%;
+  min-height: 100vh;
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.container-principal{
-    color: #FCFCF7;
-    width: 450px;
-    background-color: rgba(142, 153, 27, 0.6);
-    padding: 40px;
-    border-radius: 10px;
-    
+/* CARD PRINCIPAL */
+
+.card-login-principal {
+  width: 100%;
+  max-width: 1280px;
+  min-height: 820px;
+  background-color: #ffffff;
+  border-radius: 22px;
+  display: flex;
+  overflow: hidden;
+  padding: 24px;
 }
 
-.container-form{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
+/* LADO DO FORMULÁRIO */
+
+.lado-formulario {
+  width: 50%;
+  padding: 45px 90px 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-h3{
-    text-align: center;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 32px;
+/* MARCA */
+
+.marca {
+  width: 100%;
+  max-width: 380px;
+  margin: 0 auto 25px;
 }
 
-input{
-    margin-bottom: 15px;
-    padding: 14px;
-    border-radius: 4px;
-    border: none;
-    font-size: 16px;
+.marca h1 {
+  color: #703618;
+  font-size: 40px;
+  margin-bottom: 5px;
 }
 
-input[type="submit"]{
-    cursor: pointer;
-    color: #FCFCF7;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-weight: bold;
-    background-color: #393D0B;
+.marca p {
+  color: #8E991B;
+  font-size: 14px;
+  font-weight: 700;
+}
 
-    display: block;
-    margin: 10px auto;
+/* CAIXA DO LOGIN */
+
+.caixa-login {
+  width: 100%;
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+.caixa-login h2 {
+  color: #1f2f2b;
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+
+.subtitulo {
+  color: #5f6c72;
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 22px;
+}
+
+/* FORMULÁRIO */
+
+.formulario {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 14px;
+}
+
+.campo span {
+  color: #1f2f2b;
+  font-size: 13px;
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+
+.campo input {
+  width: 100%;
+  height: 42px;
+  border: 1px solid #d8e0e5;
+  background-color: #f7fafc;
+  border-radius: 8px;
+  padding: 0 12px;
+  outline: none;
+  color: #1f2f2b;
+  text-align: left;
+  font-size: 14px;
+}
+
+.campo input::placeholder {
+  color: #9aa8b2;
+}
+
+.campo input:focus {
+  border-color: #8E991B;
+  box-shadow: 0 0 0 3px rgba(142, 153, 27, 0.18);
+}
+
+/* BOTÃO */
+
+.botao {
+  width: 100%;
+  height: 48px;
+  background-color: #703618;    
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 700;
+  margin-top: 12px;
+  transition: 0.3s;
+}
+
+.botao:hover {
+  background-color: #8E991B;
+  transform: translateY(-2px);
+}
+
+.link-cadastro {
+  text-align: center;
+  color: #4b5960;
+  font-size: 13px;
+  margin-top: 22px;
+}
+
+.link-cadastro a {
+  color: #703618;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.link-cadastro a:hover {
+  color: #8E991B;
+}
+
+/* RODAPÉ DO LOGIN */
+
+.rodape-login {
+  width: 100%;
+  max-width: 380px;
+  margin: 35px auto 0;
+  text-align: center;
+  color: #9aa8b2;
+  font-size: 11px;
+}
+
+/* LADO DA IMAGEM */
+
+.lado-imagem {
+  width: 50%;
+  border-radius: 18px;
+  overflow: hidden;
+  position: relative;
+  background-image: url("../img/fotoBoxCadastro.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }

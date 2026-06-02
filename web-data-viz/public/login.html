@@ -1,59 +1,88 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Login </title>
-    <link rel="stylesheet" type="text/css" href="./css/cadastroLogin.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>HydraCoffee | Login</title>
+
+  <link rel="stylesheet" type="text/css" href="./css/cadastroLogin.css">
 </head>
+
 <body>
-    
-    <img src="./img/logotipo.2.png" class="logo">
-    
-    <div class="slogan">
-        <span>A cafeicultura inteligente começa aqui!</span>
-    </div>
-    <div class="container-principal">
-        <div class="container-form">
-            <h3>Login</h3>
-            <form>
 
-                <input type="email" id="email_input" placeholder="Email:"><br><br>
+  <main class="pagina-login">
 
-                <input type="password" id="senha_input" placeholder="Senha:"><br><br>
+    <section class="card-login-principal">
 
-                <input type="codigo" id="codigo_input" placeholder="Código:"><br><br>
+      <div class="lado-formulario">
 
-                <input type="button" value="Logar" onclick="entrar(event);"> 
-
-            </form>
+        <div class="marca">
+          <h1>HydraCoffee</h1>
+          <p>A cafeicultura inteligente começa aqui!</p>
         </div>
-    </div>
 
+        <div class="caixa-login">
 
+          <h2>Login</h2>
+
+          <p class="subtitulo">
+            Acesse sua conta para acompanhar os dados do sistema.
+          </p>
+
+          <form class="formulario">
+
+            <div class="campo">
+              <span>E-mail</span>
+              <input type="email" id="email_input" placeholder="Digite seu e-mail">
+            </div>
+
+            <div class="campo">
+              <span>Senha</span>
+              <input type="password" id="senha_input" placeholder="Digite sua senha">
+            </div>
+
+            <div class="campo">
+              <span>Código</span>
+              <input type="text" id="codigo_input" placeholder="Digite seu código">
+            </div>
+
+            <input class="botao" type="button" value="Entrar" onclick="entrar(event)">
+
+          </form>
+
+          <p class="link-cadastro">
+            Ainda não possui uma conta?
+            <a href="./cadastro.html">Cadastre-se</a>
+          </p>
+
+        </div>
+      </div>
+
+      <div class="lado-imagem"></div>
+
+    </section>
+
+  </main>
 
 </body>
 
 </html>
 
 <script>
+  function entrar(event) {
+    event.preventDefault();
 
+    var emailVar = email_input.value;
+    var senhaVar = senha_input.value;
+    var codigoVar = codigo_input.value;
 
-    function entrar(event) {
-        event.preventDefault();
-
-        var emailVar = email_input.value;
-        var senhaVar = senha_input.value;
-        var codigoVar = codigo_input.value;
-
-        if (codigoVar == 'HYDRAN3' && emailVar == 'admin@gmail.com' && senhaVar == 'admin1') {
-            alert("Bem Vindo N3!!");
-            window.location = "./bobia.html";
-
-        }else{
-            alert("Dados Incorretos!!");
-        }
-
+    if (codigoVar == 'HYDRAN3' && emailVar == 'admin@gmail.com' && senhaVar == 'admin1') {
+      alert("Bem Vindo N3!!");
+      window.location = "./bobia.html";
+    } else {
+      alert("Dados Incorretos!!");
     }
-
+  }
 </script>

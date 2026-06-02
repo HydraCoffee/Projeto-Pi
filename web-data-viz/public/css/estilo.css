@@ -1,228 +1,222 @@
-@import url('https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Barlow', Arial, sans-serif;
+}
 
 body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Barlow', 'Segoe UI', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: black;
-}
-
-:root {
-  --tamanho-header: 80px;
-  --tamanho-banner: calc(100vh - var(--tamanho-header) - var(--tamanho-footer) - 2px);
-  --tamanho-simulador: calc(100vh - var(--tamanho-header) - var(--tamanho-footer) - 2px);
-  --tamanho-login: calc(100vh - var(--tamanho-header) - var(--tamanho-footer) - 2px);
-  --tamanho-footer: 65px;
-}
-
-.container {
-  display: flex;
-  width: 80%;
-  margin: auto;
-}
-
-.header {
-  height: var(--tamanho-header);
-  border-bottom: 2px solid #32b9cd;
-}
-
-.header .container {
-  justify-content: space-between;
-  align-items: center;
-  height: 100%;
-}
-
-.header a {
-  text-decoration: none;
-  color: #e3b062;
-}
-
-.agora {
-  font-weight: 800;
-}
-
-.navbar {
-  width: 300px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  list-style: none;
-  color: #e3b062;
-}
-
-.titulo {
-  color: #32b9cd;
-  width: fit-content;
-  font-weight: 500;
-}
-
-.header h1 {
-  margin: 0;
-}
-
-/* BANNER */
-
-.banner {
-  height: var(--tamanho-banner);
-  color: white;
-  background-image: url('../assets/imgs/bg-jelly-fish-para-home.png');
+  min-height: 100vh;
+  background-color: #111;
+  background-image: url("../img/fundoCadastro.jpg");
   background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
-.banner .container {
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-}
-
-.banner .container p {
-  width: 50%;
-  margin: 0;
-  padding: 0;
-  font-size: 36px;
-}
-
-.banner .container span {
-  font-weight: 800;
-}
-
-/* MISSÃO VISÃO VALORES */
-
-.social {
-  background-color: #e5e5e5;
-  display: flex;
-}
-
-.social .container {
-  justify-content: center;
-}
-
-.box img {
-  width: 170px;
-}
-
-.social .container .boxes {
-  display: flex;
-  justify-content: space-between;
+.pagina-cadastro {
   width: 100%;
-  padding: 30px 0;
-}
-
-.social p {
-  text-align: center;
-}
-
-.box {
+  min-height: 100vh;
+  padding: 14px;
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
-/* FOOTER */
-
-.footer {
-  background-color: #32b9cd;
-  height: 150px;
-  color: #fff;
+.card-cadastro-principal {
+  width: 100%;
+  max-width: 1280px;
+  min-height: 820px;
+  background-color: #ffffff;
+  border-radius: 22px;
   display: flex;
-  font-size: 15px;
+  overflow: hidden;
+  padding: 24px;
 }
 
-.footer .container {
-  justify-content: center;
-  text-align: center;
-}
-
-.footer .container .version {
-  font-size: 12px;
-}
-
-/* LOGIN */
-
-.login {
-  height: var(--tamanho-login);
-  background-image: url('../assets/imgs/bg-jelly-fish-para-home.png');
-  background-size: cover;
-}
-
-.login .container {
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-}
-
-.card {
+.lado-formulario {
   width: 50%;
-  background-color: #e5e5e5;
-  border-radius: 10px;
+  padding: 45px 90px 25px;
   display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  color: palevioletred;
   flex-direction: column;
-  height: fit-content;
-  padding: 20px 0;
+  justify-content: center;
 }
 
-.card h2 {
-  margin: 0;
+.marca {
+  width: 100%;
+  max-width: 380px;
+  margin: 0 auto 35px;
+}
+
+.marca h1 {
+  color: #703618;
+  font-size: 32px;
+  margin-bottom: 5px;
+}
+
+.marca p {
+  color: #8E991B;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.caixa-cadastro {
+  width: 100%;
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+.caixa-cadastro h2 {
+  color: #1f2f2b;
   font-size: 30px;
+  margin-bottom: 10px;
+}
+
+.subtitulo {
+  color: #5f6c72;
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 22px;
 }
 
 .formulario {
+  width: 100%;
   display: flex;
-  height: 90%;
-  width: 80%;
-  justify-content: space-around;
   flex-direction: column;
-}
-
-.formulario span {
-  font-size: 15px;
-  font-weight: 800;
-}
-
-.formulario input {
-  border: 2px solid #32b9cd;
-  text-align: center;
-  border-radius: 10px;
-  margin: 0;
-}
-
-.formulario select {
-  border: 2px solid #32b9cd;
-  background-color: white;
-  color: gray;
-  height: 36px;
-  text-align: center;
-  border-radius: 10px;
-  margin: 0;
 }
 
 .campo {
   display: flex;
   flex-direction: column;
-  justify-content: start;
-  padding: 5px 0;
+  margin-bottom: 11px;
+}
+
+.campo span {
+  color: #1f2f2b;
+  font-size: 13px;
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+
+.campo input {
+  width: 100%;
+  height: 42px;
+  border: 1px solid #d8e0e5;
+  background-color: #f7fafc;
+  border-radius: 8px;
+  padding: 0 12px;
+  outline: none;
+  color: #1f2f2b;
+  text-align: left;
+  font-size: 14px;
+}
+
+.campo input::placeholder {
+  color: #9aa8b2;
+}
+
+.campo input:focus {
+  border-color: #8E991B;
+  box-shadow: 0 0 0 3px rgba(142, 153, 27, 0.18);
 }
 
 .botao {
+  width: 100%;
+  height: 48px;
+  background-color: #1f2f2b;
+  color: white;
+  border: none;
+  border-radius: 8px;
   cursor: pointer;
-  font-family: "Barlow", sans-serif;
-  border: 0;
-  border-radius: 5px;
+  font-size: 15px;
+  font-weight: 700;
+  margin-top: 12px;
+  transition: 0.3s;
+}
+
+.botao:hover {
+  background-color: #703618;
+  transform: translateY(-2px);
+}
+
+.link-login {
+  text-align: center;
+  color: #4b5960;
+  font-size: 13px;
+  margin-top: 22px;
+}
+
+.link-login a {
+  color: #703618;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.link-login a:hover {
+  color: #8E991B;
+}
+
+.rodape-cadastro {
+  width: 100%;
+  max-width: 380px;
+  margin: 35px auto 0;
+  text-align: center;
+  color: #9aa8b2;
+  font-size: 11px;
+}
+
+.lado-imagem {
+  width: 50%;
+  border-radius: 18px;
+  overflow: hidden;
+  position: relative;
+  background-image: url("../img/fotoBoxCadastro3.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.lado-imagem::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    rgba(112, 54, 24, 0.15),
+    rgba(0, 0, 0, 0.28)
+  );
+  z-index: 1;
+}
+
+.alerta_erro {
+  display: flex;
+  justify-content: center;
+}
+
+.card_erro {
+  display: none;
+  background-color: #fff;
+  color: #1f2f2b;
+  width: 280px;
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  border-radius: 8px;
+  border: #703618 3px solid;
+  padding: 12px;
+  z-index: 10;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.card_erro #mensagem_erro {
   font-weight: 600;
-  font-size: 18px;
-  color: #fff;
-  background-color: #ED145B;
-  width: 120px;
-  height: 30px;
-  align-self: center;
-  margin-top: 20px;
+  font-size: 15px;
 }
 
 .loading-div {
   width: 50px;
+  margin: 15px auto 0;
   display: none;
 }
 
@@ -232,131 +226,5 @@ body {
 }
 
 #div_erros_login {
-  display: none
-}
-
-/* FORMULARIO */
-
-.alerta_erro{
-  display: flex;
-  justify-content: flex-end;
-}
-
-.card_erro {
   display: none;
-  background-color: #fff;
-  color: black;
-  width: 230px;
-  position: fixed;
-  border-radius: 4px;
-  border: #ED145B 3px solid;
-  padding: 10px;
-  margin-right: 10%;
-}
-
-.card_erro #mensagem_erro{
-  font-weight: 500;
-  font-size: 20px;
-}
-
-.formulario .tipo_campo {
-  font-size: 20px;
-  font-weight: 600 !important;
-}
-
-.formulario {
-  display: flex;
-  flex-direction: column;
-}
-
-input {
-  margin-bottom: 10px;
-  border: 2px solid #32b9cd;
-  padding: 10px;
-  text-align: center;
-  border-radius: 10px;
-}
-
-.btn {
-  font-family: "Barlow", sans-serif;
-  border: 0;
-  border-radius: 5px;
-  font-weight: 600;
-  font-size: 18px;
-  padding: 10px 15px;
-  color: white;
-  background-color: #ED145B;
-  width: 120px;
-  align-self: center;
-  margin-top: 5px;
-}
-
-.loading-div {
-  width: 50px;
-  margin: auto;
-  display: none;
-}
-
-.loading-div img {
-  height: 50px;
-  width: 50px;
-}
-
-/* SIMULADOR */
-
-.simulador {
-  color: white;
-}
-
-.simulador .container {
-  flex-direction: column;
-  overflow: scroll; 
-  height: var(--tamanho-simulador);
-}
-
-/* ALERTA */
-
-#alerta {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-}
-
-.mensagem-alarme {
-  background-color: white;
-  border-radius: 5px;
-  width: 300px;
-  height: 80px;
-  margin: 10px;
-  padding: 10px 0;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-}
-
-.mensagem-alarme h3 {
-  font-size: 14px;
-  margin: 0;
-}
-
-.mensagem-alarme .informacao {
-  width: 66%;
-}
-
-.alarme-sino {
-  width: 48px;
-  height: 48px;
-  animation-name: bell;
-  animation-duration: 4s;
-  background-image: url('https://cdn-icons-png.flaticon.com/512/1157/1157000.png');
-  background-size: cover;
-  animation-iteration-count: infinite;
-}
-
-@keyframes bell {
-  0%   {transform: rotate(25deg)}
-  25%  {transform: rotate(-25deg)}
-  50%  {transform: rotate(25deg)}
-  75%  {transform: rotate(-25deg)}
-  100% {transform: rotate(25deg)}
 }
