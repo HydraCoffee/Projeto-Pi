@@ -3,29 +3,29 @@
   <head>
     <meta charset="UTF-8" />
     <title>HydraCoffee - Monitoramento de Umidade</title>
-    <link rel="stylesheet" type="text/css" href="./css/hydracoffee.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/hydracoffee.css"/>
+    <link rel="icon" href="../../img/LOGO.png">
+
   </head>
   <body>
     <header>
       <div class="Logo">
-        <img
-          src="https://github.com/DanizDev/LoginCadastroProjetoPi/blob/main/logotipo.2.png?raw=true"
-          alt="logo"
-        />
+        <img src="https://github.com/DanizDev/LoginCadastroProjetoPi/blob/main/logotipo.2.png?raw=true" alt="logo"/>
 
            <nav>
-      <a href="#sobre">Sobre</a>
-      <a href="#problema">Problema</a>
-      <a href="#beneficios">Benefícios</a>
-      <a href="./simuladorfinanceiro.html">Simulador</a>
-    </nav>
+              <a href="#sobre">Sobre</a>
+              <a href="#problema">Problema</a>
+              <a href="#beneficios">Benefícios</a>
+              <a href="../../simuladorfinanceiro.html">Simulador</a>
+           </nav>
       
       </div>
-      <div class="Cadastro">
-        <a href="./cadastro.html">Cadastre-se</a>
-        <span class="barra"></span>
-        <a href="./login.html">Login</a>
-      </div>
+
+        <div class="Cadastro">
+          <a href="../../cadastro.html">Cadastre-se</a>
+          <span class="barra"></span>
+          <a href="../../login.html">Login</a>
+        </div>
     </header>
 
 
@@ -47,7 +47,7 @@
 
         <div class="sobre-texto">
             <p>
-                O <strong>HydraCoffee</strong> é uma solução desenvolvida para
+                A <strong>HydraCoffee</strong> é uma solução desenvolvida para
                 transformar a forma como a irrigação é gerenciada e influencia
                 na cafeicultura.
             </p>
@@ -70,48 +70,63 @@
         </div>
 
         <div class="sobre-imagem">
-            <img src="./img/sensor-cafe.jpg" alt="Sensor na plantação">
+            <img src="../../img/sensor-cafe.jpg" alt="Sensor na plantação">
         </div>
 
     </div>
 
 </section>
 
-    <div class="section" id="problema">
-      <div class="card">
-        <h2>O Problema</h2>
-        <p>
-          A agricultura é responsável por uma grande parcela do consumo de água
+    <section class="sobre" id="problema">
+
+    <h2 class="titulo-sessao">O Problema</h2>
+
+    <div class="sobre-container">
+
+        <div class="sobre-texto">
+            <p>
+                A <strong>Agricultura</strong>  é responsável por uma grande parcela do consumo de água
           doce no mundo, sendo também um dos setores com maior índice de
           desperdício desse recurso. Em muitos casos, a irrigação ainda é
           realizada de forma padronizada, sem considerar as reais condições do
           solo.
-        </p>
+            </p>
 
-        <p>
+            <p>
           Esse modelo tradicional, pode resultar em irrigação excessiva ou
           insuficiente. Como consequência, ocorrem problemas como aumento nos
           custos de energia, desgaste de equipamentos, queda na produtividade e
-          impactos ambientais negativos.
-        </p>
+          impactos ambientais negativos.                                                                                                         
+            </p>
 
-        <p>
+            <p>
           Além disso, a falta de dados confiáveis dificulta a tomada de decisão
           do agricultor, tornando o controle hídrico menos eficiente. Em um
           cenário de escassez de água e aumento dos custos de produção, esse
           problema se torna ainda mais crítico.
-        </p>
-      </div>
+            </p>
+
+        </div>
+
+        <div class="sobre-imagem">
+            <img src="../../img/plantCafe.jpg" alt="Problema">
+        </div>
+
     </div>
 
-    <div class="section" id="beneficios">
-      <div class="card">
-        <h2>Por que usar o HydraCoffee ?</h2>
+</section>
 
-        <p>
-          O HydraCoffee surge como uma solução estratégica para modernizar a
-          gestão da irrigação, trazendo benefícios diretos para o produtor :
-        </p>
+    <section class="sobre" id="beneficios">
+
+    <h2 class="titulo-sessao">Por que usar o HydraCoffee?</h2>
+
+    <div class="sobre-container">
+
+        <div class="sobre-texto">
+            <p>
+                A <strong>HydraCoffee</strong> surge como uma solução estratégica para modernizar a
+          gestão da irrigação, trazendo benefícios diretos para o produtor como:
+            </p>
 
         <div class="lista">
           <p class="item">
@@ -138,16 +153,17 @@
           </p>
         </div>
 
-        <p>
-          Com o HydraCoffee, você toma decisões com base em dados reais, reduz
-          custos e aumenta sua produtividade com sustentabilidade.
-        </p>
+        <p> Com a HydraCoffee, você toma decisões com base em dados reais, reduz
+          custos e aumenta sua produtividade com sustentabilidade.</p>
+        </div>
 
-        <button onclick="mostrarMensagem()">Saiba mais</button>
-        <p id="mensagem"></p>
-      </div>
+        <div class="sobre-imagem">
+            <img src="../../img/beneficiosCafe.jpg" alt="Beneficio">
+        </div>
+
     </div>
 
+</section>
     <footer>
       <p>© 2026 HydraCoffee - Solução para Agricultura Inteligente</p>
     </footer>

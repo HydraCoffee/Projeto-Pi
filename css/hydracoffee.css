@@ -68,7 +68,7 @@ text-decoration: none;
   padding: 13px 30px;
   border-radius: 5px;
   text-decoration: none;
-  color: black;
+  color: white;
   font-size: 18px;
   transition: 0.3s;
 }
@@ -76,7 +76,7 @@ text-decoration: none;
 .btn-hero:hover{
   background-color: #8E991B;
   transform: scale(1.05);
-  color: white;
+  color: black;
 }
 
 
@@ -172,14 +172,14 @@ transform: scale(1.1);
 
 .sobre-texto{
     flex: 1;
-        color: #333;
+    color: #333;
     font-size: 18px;
     line-height: 1.8;
 }
 
 .sobre-imagem{
     flex: 1;
-}
+}   
 
 .sobre-imagem img{
     width: 100%;
@@ -197,14 +197,15 @@ transform: scale(1.1);
 
 
 nav {
-  display: flex;
-background: none;
-flex: 2;
-padding: 10px;
-text-align: center;
-gap: 20px;
-justify-content: flex-end;
-margin-left: 300px;
+    display: flex;
+    background: none;
+    flex: 2;
+    padding: 10px;
+    text-align: center;
+    gap: 20px;
+    justify-content: flex-end;
+    margin-left: 50%;
+
 }
 
 nav a {
