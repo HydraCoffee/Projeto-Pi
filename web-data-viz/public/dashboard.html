@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HydraCoffe – Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/dashboard.css">
+    <link rel="icon" href="./img/LOGO.png">
+</head>
+<body>
+
+<aside class="sidebar">
+    <div class="sidebar-logo">HydraCoffe</div>
+
+    <nav class="sidebar-nav">
+        <div class="hello">
+            <h3>Olá, <span id="b_usuario">Usuário</span>!</h3>
+        </div>
+
+        <button class="nav-item ativo" id="btnGeral" onclick="mostrarPagina('geral')">
+            Medição Geral
+        </button>
+
+        <button class="nav-item" onclick="toggleSubmenu()">
+            Hectares
+            <span id="setaHectares">▶</span>
+        </button>
+
+        <div id="submenuHectares" class="submenu"></div>
+
+        <button class="nav-item" onclick="window.location.replace('login.html')">
+            Sair
+        </button>
+    </nav>
+
+    <div class="sidebar-footer">v1.0 · HydraCoffe</div>
+</aside>
+
+<main class="conteudo">
+    <div class="page-header">
+        <div>
+            <h2 id="tituloPagina">Carregando...</h2>
+            <p class="page-subtitulo" id="subtituloPagina"></p>
+        </div>
+        <span class="data-hora" id="dataHora"></span>
+    </div>
+
+    <div class="status-bar">
+        <div class="status-dot"></div>
+        Última leitura às <span id="ultimaLeitura">--:--</span>
+    </div>
+
+    <div class="kpi-grid" id="kpiGrid"></div>
+
+    <div class="graficos-grid">
+        <div class="grafico-card">
+            <div class="grafico-titulo">Umidade ao Longo do Dia</div>
+            <div class="grafico-subtitulo">Faixa Ideal: 65% a 75%</div>
+            <canvas id="graficoHora"></canvas>
+        </div>
+        <div class="grafico-card">
+            <div class="grafico-titulo">Umidade Média Mensal</div>
+            <div class="grafico-subtitulo">Últimos 5 meses</div>
+            <canvas id="graficoMes"></canvas>
+        </div>
+    </div>
+</main>
+
+<script>
+    b_usuario.innerHTML = sessionStorage.NOME_USUARIO || "Usuário";
+
+    let grafico1 = null;
+    let grafico2 = null;
+
+    const listaHectares = [
+        { id: 1, nome: "Hectare 1 · Zona Norte" },
+        { id: 2, nome: "Hectare 2 · Zona Sul" },
+        { id: 3, nome: "Hectare 3 · Estufa A" }
+    ];
+
+    listaHectares.forEach(function(hectare) {
+        const botao = document.createElement('button');
+        botao.className = 'nav-item submenu-item';
+        botao.textContent = hectare.nome;
+        botao.onclick = function() { mostrarPagina(hectare.id); };
+        document.getElementById('submenuHectares').appendChild(botao);
+    });
+
+    function toggleSubmenu() {
+        const submenu = document.getElementById('submenuHectares');
+        const seta = document.getElementById('setaHectares');
+        if (submenu.classList.contains('aberto')) {
+            submenu.classList.remove('aberto');
+            seta.textContent = '▶';
+        } else {
+            submenu.classList.add('aberto');
+            seta.textContent = '▼';
+        }
+    }
+
+    async function mostrarPagina(id) {
+        let horas = [];
+        let valoresFinaisGrafico = [];
+        let kpisHTML = '';
+        let titulo = '';
+        let subtitulo = '';
+        let valoresMes = [68, 70, 72, 69, 71];
+
+        let url = '';
+        if (id === 'geral') {
+            const idEmpresa = sessionStorage.FK_EMPRESA || 1;
+            url = `/dashboard/geral/${idEmpresa}`;
+            titulo = "Medição Geral";
+            subtitulo = "Visão geral de todas as zonas monitoradas";
+        } else {
+            url = `/dashboard/hectare/${id}`;
+            titulo = `Hectare ${id}`;
+            subtitulo = `Monitoramento da Zona do Hectare ${id}`;
+        }
+
+        try {
+            const resposta = await fetch(url);
+
+            if (resposta.ok) {
+                const textoResposta = await resposta.text();
+                const dadosDoBanco = textoResposta.trim() ? JSON.parse(textoResposta) : [];
+               
+                dadosDoBanco.reverse();
+
+                horas = dadosDoBanco.map(registro => registro.momento_grafico);
+                const valoresReais = dadosDoBanco.map(registro => registro.umidade);
+                const ultimaUmidadeReal = valoresReais[valoresReais.length - 1] || 0;
+
+                // Fallback: se a API retornar vazio, gera horas simuladas para os gráficos
+                if (horas.length === 0) {
+                    for (let h = 6; h <= 18; h++) {
+                        horas.push(`${String(h).padStart(2, '0')}:00`);
+                    }
+                }
+
+                // Gera valores simulados com base na umidade real + variação aleatória
+                // Se não há dados reais, usa uma base fixa por hectare
+                function gerarSimulado(base, variacao) {
+                    return horas.map((_, i) => {
+                        const baseValor = valoresReais[i] !== undefined ? valoresReais[i] : base;
+                        return Math.min(100, Math.max(0, baseValor + Math.floor(Math.random() * variacao * 2) - variacao));
+                    });
+                }
+
+                if (id == 'geral') {
+                    valoresFinaisGrafico = valoresReais.length > 0 ? valoresReais : horas.map(() => 70);
+                   
+                    let statusTipo = (ultimaUmidadeReal >= 65 && ultimaUmidadeReal <= 75) ? "ok" : "alerta";
+                    let statusTexto = (ultimaUmidadeReal >= 65 && ultimaUmidadeReal <= 75) ? "IDEAL" : "CORRIGIR";
+
+                    kpisHTML = `
+                        <div class="kpi-card ${statusTipo}">
+                            <span class="kpi-label">Umidade Atual</span>
+                            <span class="kpi-valor">${ultimaUmidadeReal}%</span>
+                            <span class="kpi-desc">Leitura em tempo real do Hectare 1</span>
+                        </div>
+                        <div class="kpi-card ok">
+                            <span class="kpi-label">Status do Solo</span>
+                            <span class="kpi-valor">${statusTexto}</span>
+                            <span class="kpi-desc">Faixa ideal: 65% a 75%</span>
+                        </div>
+                        <div class="kpi-card neutro">
+                            <span class="kpi-label">Sensores Operacionais</span>
+                            <span class="kpi-valor">100%</span>
+                            <span class="kpi-desc">Dispositivos conectados</span>
+                        </div>
+                    `;
+                } else if (id == 1) {
+                    // Base 70 (faixa ideal), variação de ±4
+                    valoresFinaisGrafico = gerarSimulado(70, 4);
+                    const ultimaUmidadeSimulada = valoresFinaisGrafico[valoresFinaisGrafico.length - 1];
+                    valoresMes = [68, 70, 72, 69, 71];
+
+                    kpisHTML = `
+                        <div class="kpi-card ok">
+                            <span class="kpi-label">Umidade Atual</span>
+                            <span class="kpi-valor">${ultimaUmidadeSimulada}%</span>
+                            <span class="kpi-desc">Solo em condições ótimas</span>
+                        </div>
+                        <div class="kpi-card ok">
+                            <span class="kpi-label">Status do Setor</span>
+                            <span class="kpi-valor">IDEAL</span>
+                            <span class="kpi-desc">Faixa estável do café</span>
+                        </div>
+                    `;
+                } else if (id == 2) {
+                    // Base 52 (solo seco), variação de ±7
+                    valoresFinaisGrafico = gerarSimulado(52, 7);
+                    const ultimaUmidadeSimulada = valoresFinaisGrafico[valoresFinaisGrafico.length - 1];
+                    valoresMes = [55, 52, 50, 48, 51];
+
+                    const statusTipo2 = ultimaUmidadeSimulada < 65 ? "alerta" : "ok";
+                    const statusTexto2 = ultimaUmidadeSimulada < 65 ? "ALERTA" : "IDEAL";
+                    const descStatus2 = ultimaUmidadeSimulada < 65 ? "Necessário ligar irrigação" : "Faixa estável";
+
+                    kpisHTML = `
+                        <div class="kpi-card ${statusTipo2}">
+                            <span class="kpi-label">Umidade Atual</span>
+                            <span class="kpi-valor">${ultimaUmidadeSimulada}%</span>
+                            <span class="kpi-desc">Solo muito seco!</span>
+                        </div>
+                        <div class="kpi-card ${statusTipo2}">
+                            <span class="kpi-label">Status do Setor</span>
+                            <span class="kpi-valor">${statusTexto2}</span>
+                            <span class="kpi-desc">${descStatus2}</span>
+                        </div>
+                    `;
+                } else if (id == 3) {
+                    // Base 80 (solo encharcado), variação de ±5
+                    valoresFinaisGrafico = gerarSimulado(80, 5);
+                    const ultimaUmidadeSimulada = valoresFinaisGrafico[valoresFinaisGrafico.length - 1];
+                    valoresMes = [78, 81, 83, 80, 82];
+
+                    const statusTipo3 = ultimaUmidadeSimulada > 75 ? "alerta" : "ok";
+                    const statusTexto3 = ultimaUmidadeSimulada > 75 ? "ALERTA" : "IDEAL";
+                    const descStatus3 = ultimaUmidadeSimulada > 75 ? "Solo encharcado, reduzir irrigação" : "Faixa estável";
+
+                    kpisHTML = `
+                        <div class="kpi-card ${statusTipo3}">
+                            <span class="kpi-label">Umidade Atual</span>
+                            <span class="kpi-valor">${ultimaUmidadeSimulada}%</span>
+                            <span class="kpi-desc">Solo encharcado!</span>
+                        </div>
+                        <div class="kpi-card ${statusTipo3}">
+                            <span class="kpi-label">Status do Setor</span>
+                            <span class="kpi-valor">${statusTexto3}</span>
+                            <span class="kpi-desc">${descStatus3}</span>
+                        </div>
+                    `;
+                }
+
+                document.getElementById('tituloPagina').textContent = titulo;
+                document.getElementById('subtituloPagina').textContent = subtitulo;
+                document.getElementById('kpiGrid').innerHTML = kpisHTML;
+
+                if (grafico1) grafico1.destroy();
+                if (grafico2) grafico2.destroy();
+
+                grafico1 = new Chart(document.getElementById('graficoHora'), {
+                    data: {
+                        labels: horas,
+                        datasets: [
+                            {
+                                type: 'bar',
+                                label: 'Umidade (%)',
+                                data: valoresFinaisGrafico,
+                                backgroundColor: 'rgba(112, 137, 24, 0.75)',
+                                borderRadius: 6
+                            },
+                            {
+                                type: 'line',
+                                label: 'Meta Ideal (70%)',
+                                data: horas.map(() => 70),
+                                borderColor: '#e07b39',
+                                borderDash: [6, 4],
+                                pointRadius: 0,
+                                fill: false
+                            }
+                        ]
+                    },
+                    options: {
+                        scales: {
+                            y: { beginAtZero: true, max: 100 },
+                            x: { grid: { display: false } }
+                        }
+                    }
+                });
+
+                grafico2 = new Chart(document.getElementById('graficoMes'), {
+                    type: 'line',
+                    data: {
+                        labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai'],
+                        datasets: [{
+                            label: 'Umidade Média (%)',
+                            data: valoresMes,
+                            borderColor: '#49580f',
+                            backgroundColor: 'rgba(112, 137, 24, 0.15)',
+                            fill: true,
+                            tension: 0.4,
+                            pointRadius: 5
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: { beginAtZero: true, max: 100 },
+                            x: { grid: { display: false } }
+                        }
+                    }
+                });
+
+            } else {
+                console.error("Erro na resposta da API ou dados vazios.");
+                document.getElementById('tituloPagina').textContent = "Sem dados cadastrados no banco";
+            }
+        } catch (erro) {
+            console.error("Erro ao conectar com a API:", erro);
+            document.getElementById('tituloPagina').textContent = "Erro ao conectar com o Servidor";
+        }
+    }
+
+    function atualizarRelogio() {
+        const agora = new Date();
+        document.getElementById('dataHora').textContent =
+            agora.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' })
+            + ' · ' + agora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        document.getElementById('ultimaLeitura').textContent =
+            agora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    }
+    atualizarRelogio();
+    setInterval(atualizarRelogio, 60000);
+
+    mostrarPagina('geral');
+</script>
+
+</body>
+</html>
