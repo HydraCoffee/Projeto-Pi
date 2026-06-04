@@ -107,7 +107,6 @@
   function cadastrar() {
     var nomeVar = nome_input.value;
     var emailVar = email_input.value;
-    var cpfVar = cpf_input.value;
     var senhaVar = senha_input.value;
     var confirmacaoSenhaVar = confirmacao_senha_input.value;
     var codigoVar = codigo_input.value;
@@ -117,30 +116,23 @@
       nomeVar == "" ||
       emailVar == "" ||
       senhaVar == "" ||
-      cpfVar == "" ||
       confirmacaoSenhaVar == "" ||
       codigoVar == ""
     ) {
       cardErro.style.display = "block";
       mensagem_erro.innerHTML = "Preencha todos os campos para continuar.";
-
-      finalizarAguardar();
       return false;
     }
 
     if (senhaVar != confirmacaoSenhaVar) {
       cardErro.style.display = "block";
       mensagem_erro.innerHTML = "As senhas não coincidem.";
-
-      finalizarAguardar();
       return false;
     }
 
     if (senhaVar.length < 8) {
       cardErro.style.display = "block";
       mensagem_erro.innerHTML = "A senha precisa ter pelo menos 8 caracteres.";
-
-      finalizarAguardar();
       return false;
     }
 
@@ -149,8 +141,8 @@
     var codigoValido = false;
 
     for (let i = 0; i < listaEmpresasCadastradas.length; i++) {
-      if (listaEmpresasCadastradas[i].codigo_ativacao == codigoVar) {
-        idEmpresaVincular = listaEmpresasCadastradas[i].id;
+      if (listaEmpresasCadastradas[i].codigo == codigoVar) {
+        idEmpresaVincular = listaEmpresasCadastradas[i].idEmpresa;
         codigoValido = true;
         console.log("Código de ativação válido.");
         break;
@@ -160,11 +152,10 @@
     if (codigoValido == false) {
       cardErro.style.display = "block";
       mensagem_erro.innerHTML = "Código de ativação inválido.";
-      finalizarAguardar();
       return false;
     }
 
-    fetch("/usuarios/cadastrar", {
+    fetch("/funcionarios/cadastrar", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -173,7 +164,6 @@
         nomeServer: nomeVar,
         emailServer: emailVar,
         senhaServer: senhaVar,
-        cpfServer: cpfVar,
         idEmpresaVincularServer: idEmpresaVincular
       }),
     })
@@ -182,23 +172,18 @@
 
         if (resposta.ok) {
           cardErro.style.display = "block";
-
           mensagem_erro.innerHTML =
             "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
 
           setTimeout(() => {
             window.location = "login.html";
-          }, "2000");
-
-          limparFormulario();
-          finalizarAguardar();
+          }, 2000);
         } else {
           throw "Houve um erro ao tentar realizar o cadastro!";
         }
       })
       .catch(function (resposta) {
         console.log(`#ERRO: ${resposta}`);
-        finalizarAguardar();
       });
 
     return false;
@@ -212,9 +197,6 @@
         resposta.json().then((empresas) => {
           empresas.forEach((empresa) => {
             listaEmpresasCadastradas.push(empresa);
-
-            console.log("listaEmpresasCadastradas");
-            console.log(listaEmpresasCadastradas[0].codigo_ativacao);
           });
         });
       })
