@@ -59,11 +59,6 @@
             </div>
 
             <div class="campo">
-              <span>CPF</span>
-              <input id="cpf_input" type="text" placeholder="123456789-11" />
-            </div>
-
-            <div class="campo">
               <span>Senha</span>
               <input id="senha_input" type="password" placeholder="No mínimo 8 caracteres" />
             </div>
@@ -141,14 +136,16 @@
     var codigoValido = false;
 
     for (let i = 0; i < listaEmpresasCadastradas.length; i++) {
-      if (listaEmpresasCadastradas[i].codigo == codigoVar) {
-        idEmpresaVincular = listaEmpresasCadastradas[i].idEmpresa;
+      if (listaEmpresasCadastradas[i].codigo == codigoVar) { 
+        
+        idEmpresaVincular = listaEmpresasCadastradas[i].idEmpresa; 
+        
         codigoValido = true;
         console.log("Código de ativação válido.");
         break;
       }
     }
-
+    
     if (codigoValido == false) {
       cardErro.style.display = "block";
       mensagem_erro.innerHTML = "Código de ativação inválido.";
