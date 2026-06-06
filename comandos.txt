@@ -1,0 +1,1 @@
+comando para rodar os npm starts de uma vez: npm install concurrently --save-dev

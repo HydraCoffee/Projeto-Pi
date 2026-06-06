@@ -8,7 +8,7 @@
   <title>HydraCoffee | Login</title>
 
   <link rel="stylesheet" type="text/css" href="./css/cadastroLogin.css">
-  <link rel="icon" href="../../img/LOGO.png">
+  <link rel="icon" href="./assets/img/LOGO.png">
 </head>
 
 <body>
@@ -85,6 +85,7 @@
     }
 
     console.log("FORM LOGIN: ", emailVar);
+    console.log("Código digitado:", codigoVar);
 
     fetch("/funcionarios/autenticar", {
       method: "POST",
@@ -93,7 +94,8 @@
       },
       body: JSON.stringify({
         emailServer: emailVar,
-        senhaServer: senhaVar
+        senhaServer: senhaVar,
+        codigoServer: codigoVar 
       })
     }).then(function (resposta) {
       console.log("ESTOU NO THEN DO entrar()!")
@@ -113,7 +115,12 @@
           alert(`Bem-vindo(a), ${json.nome}! Login realizado com sucesso.`);
           
           setTimeout(function () {
-            window.location = "./dashboard.html"; 
+            if(json.tipo === 'admin'){
+              window.location = "http://localhost:4000";
+            }else{
+              window.location = "./dashboard.html"; 
+            }
+            
           }, 1000); 
 
         });

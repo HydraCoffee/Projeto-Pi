@@ -18,6 +18,9 @@
 
     // configurando o servidor para servir arquivos estáticos
 
+    // configurando o servidor para servir arquivos estáticos
+app.use("/css", express.static(path.join(__dirname, "..", "public", "css")));
+
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "..", "public", "bobia.html"));
 });

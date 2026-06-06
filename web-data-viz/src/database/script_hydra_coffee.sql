@@ -19,6 +19,11 @@ CREATE TABLE funcionario (
     REFERENCES empresa(idEmpresa)
 );
 
+ALTER TABLE funcionario ADD COLUMN tipo VARCHAR(20) DEFAULT 'funcionario';
+-- pega o email do admin cadastrado e seleciona o tipo dele para admin e nao funcionario.
+UPDATE funcionario SET tipo = 'admin' WHERE email = 'admin@gmail.com';
+
+
 CREATE TABLE endereco (
     idEndereco INT PRIMARY KEY AUTO_INCREMENT,
     descricao VARCHAR(200),
@@ -76,6 +81,8 @@ VALUES
 ('Grãos de Ouro Agronegocios S.A.', '98765432000188', 'Grãos de Ouro', 'GRA0002'),
 ('Brasil Café LTDA', '45612378000122', 'Brasil Café', 'BRA0003');
 
+SELECT * FROM empresa;
+
 INSERT INTO setor (regiao, fkEmpresa)
 VALUES
 ('Norte', 1),
@@ -88,3 +95,8 @@ VALUES
 INSERT INTO sensor (statusSensor, talhao, fila, planta, fkSetor)
 VALUES
 ('Funcionando', 'Talhão A', 1, 1, 1);
+
+
+SELECT f.*, e.codigo FROM funcionario f
+JOIN empresa e ON f.fkEmpresa = e.idEmpresa
+;
