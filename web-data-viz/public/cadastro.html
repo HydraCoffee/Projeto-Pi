@@ -143,15 +143,22 @@
 
     setInterval(sumirMensagem, 5000);
 
+
     var codigoValido = false;
 
-    for (let i = 0; i < listaEmpresasCadastradas.length; i++) {
-      if (listaEmpresasCadastradas[i].codigo == codigoVar) {
+    console.log("Tentando validar o código:", codigoVar);
+    console.log("Lista de empresas disponíveis no front:", listaEmpresasCadastradas);
 
-        idEmpresaVincular = listaEmpresasCadastradas[i].idEmpresa;
+    for (let i = 0; i < listaEmpresasCadastradas.length; i++) {
+      var codigoEmpresaBando = listaEmpresasCadastradas[i].codigo || listaEmpresasCadastradas[i].Codigo;
+      var idEmpresaBanco = listaEmpresasCadastradas[i].idEmpresa || listaEmpresasCadastradas[i].id_empresa || listaEmpresasCadastradas[i].id;
+
+      if (codigoEmpresaBando && codigoEmpresaBando.trim() == codigoVar.trim()) {
+
+        idEmpresaVincular = idEmpresaBanco;
 
         codigoValido = true;
-        console.log("Código de ativação válido.");
+        console.log("Código de ativação válido encontrado para a empresa ID:", idEmpresaVincular);
         break;
       }
     }
@@ -161,6 +168,7 @@
       mensagem_erro.innerHTML = "Código de ativação inválido.";
       return false;
     }
+
 
     fetch("/funcionarios/cadastrar", {
       method: "POST",

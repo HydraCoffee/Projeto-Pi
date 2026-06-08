@@ -22,7 +22,9 @@ function executar(instrucao) {
         conexao.query(instrucao, function (erro, resultados) {
             conexao.end();
             if (erro) {
+                console.error("\n[ERRO NO BANCO DE DADOS]:", erro.message || erro);
                 reject(erro);
+                return;
             }
             console.log(resultados);
             resolve(resultados);

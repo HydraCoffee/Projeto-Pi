@@ -174,16 +174,20 @@
                     const ultimaUmidadeSimulada = valoresFinaisGrafico[valoresFinaisGrafico.length - 1];
                     valoresMes = [68, 70, 72, 69, 71];
 
+                    const statusTipo1 = ultimaUmidadeSimulada < 75 ? "alerta" : "ok";
+                    const statusTexto1 = ultimaUmidadeSimulada < 75 ? "ALERTA" : "IDEAL";
+                    const descStatusDois = ultimaUmidadeSimulada < 65 ? "Necessário ligar irrigação" : "Faixa estável";
+
                     kpisHTML = `
-                        <div class="kpi-card ok">
+                        <div class="kpi-card ${statusTipo1}">
                             <span class="kpi-label">Umidade Atual</span>
                             <span class="kpi-valor">${ultimaUmidadeSimulada}%</span>
-                            <span class="kpi-desc">Solo em condições ótimas</span>
+                            <span class="kpi-desc">Solo muito seco!</span>
                         </div>
-                        <div class="kpi-card ok">
+                        <div class="kpi-card ${statusTipo1}">
                             <span class="kpi-label">Status do Setor</span>
-                            <span class="kpi-valor">IDEAL</span>
-                            <span class="kpi-desc">Faixa estável do café</span>
+                            <span class="kpi-valor">${statusTexto1}</span>
+                            <span class="kpi-desc">${descStatusDois}</span>
                         </div>
                     `;
                 } else if (id == 2) {
