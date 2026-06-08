@@ -190,3 +190,7 @@ body {
   text-decoration: none;
   font-weight: 700;
 }
+.botao-voltar-pagina:hover {
+  background-color: #703618;
+  color: white;
+}

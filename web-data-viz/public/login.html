@@ -50,7 +50,7 @@
 
             <div class="campo">
               <span>Código</span>
-              <input type="text" id="codigo_input" placeholder="Digite seu código se for ADMIN">
+              <input type="text" id="codigo_input" placeholder="Digite o código da sua empresa"> ">
             </div>
 
             <input class="botao" type="button" value="Entrar" onclick="entrar(event)">
@@ -83,7 +83,7 @@
     var senhaVar = senha_input.value;
     var codigoVar = codigo_input.value;
 
-    if (emailVar == "" || senhaVar == "") {
+    if (emailVar == "" || senhaVar == "" || codigoVar == "") {
       alert("Por favor, preencha todos os campos.");
       return false;
     }
