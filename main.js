@@ -36,20 +36,52 @@ const serial = async (valoresporcentagem) => {
         console.log(data);
         const valores = data.split(';');
         const umidade = parseInt(valores[0]);
-        valoresporcentagem.push(umidade);
 
+        valoresporcentagem.push(umidade);
+        
         if (HABILITAR_OPERACAO_INSERIR) {
-            await poolBancoDados.execute(
+            try{
+                const [resultadoMedicao] =             await poolBancoDados.execute(
                 'INSERT INTO medicao (umidade, fkSensor) VALUES (?, ?)',
-                [umidade, FK_SENSOR_ID]
+                    [umidade, FK_SENSOR_ID]       
             );
-            console.log("Valores inseridos no banco:", umidade);
+            
+            const fkMedicaoGerado = resultadoMedicao.insertId;
+            console.log(`Valores inseridos na tabela medicao. ID:${fkMedicaoGerado} | ${umidade}%`); 
+
+            let precisaDeAlerta = false;
+            let nomeAlerta = '';
+
+            if(umidade < 65){
+                precisaDeAlerta = true;
+                nomeAlerta = 'Alerta, Necessário Irrigação';
+            }else if(umidade > 75){
+                precisaDeAlerta = true;
+                nomeAlerta = 'Alerta, Umidade Alta';
+            }
+
+            if(precisaDeAlerta){
+                await poolBancoDados.execute(
+                    'INSERT INTO alerta(nome, statusAlerta, fkMedicao) VALUES(?, ?, ?)',
+                    [nomeAlerta, 'Alerta', fkMedicaoGerado]
+                );
+                console.log(`Alerta Inserido no banco: "${nomeAlerta}"`)
+            }
+            
+            }catch(erroBanco){
+                console.error("Erro ao realizar operações no banco de dados: ", erroBanco);
+            }
+        
         }
+    
+    
     });
+    
 
     arduino.on('error', (mensagem) => {
         console.error(`Erro no arduino: ${mensagem}`);
     });
+    
 };
 
 const servidor = (valoresporcentagem) => {

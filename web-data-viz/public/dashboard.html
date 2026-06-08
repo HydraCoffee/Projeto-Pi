@@ -174,8 +174,8 @@
                     const ultimaUmidadeSimulada = valoresFinaisGrafico[valoresFinaisGrafico.length - 1];
                     valoresMes = [68, 70, 72, 69, 71];
 
-                    const statusTipo1 = ultimaUmidadeSimulada < 75 ? "alerta" : "ok";
-                    const statusTexto1 = ultimaUmidadeSimulada < 75 ? "ALERTA" : "IDEAL";
+                    const statusTipo1 = ultimaUmidadeSimulada <= 75 ? "alerta" : "ok";
+                    const statusTexto1 = ultimaUmidadeSimulada <= 75 ? "ALERTA" : "IDEAL";
                     const descStatusDois = ultimaUmidadeSimulada < 65 ? "Necessário ligar irrigação" : "Faixa estável";
 
                     kpisHTML = `
@@ -195,8 +195,8 @@
                     const ultimaUmidadeSimulada = valoresFinaisGrafico[valoresFinaisGrafico.length - 1];
                     valoresMes = [55, 52, 50, 48, 51];
 
-                    const statusTipo2 = ultimaUmidadeSimulada < 65 ? "alerta" : "ok";
-                    const statusTexto2 = ultimaUmidadeSimulada < 65 ? "ALERTA" : "IDEAL";
+                    const statusTipo2 = ultimaUmidadeSimulada <= 65 ? "alerta" : "ok";
+                    const statusTexto2 = ultimaUmidadeSimulada <= 65 ? "ALERTA" : "IDEAL";
                     const descStatus2 = ultimaUmidadeSimulada < 65 ? "Necessário ligar irrigação" : "Faixa estável";
 
                     kpisHTML = `
@@ -216,8 +216,8 @@
                     const ultimaUmidadeSimulada = valoresFinaisGrafico[valoresFinaisGrafico.length - 1];
                     valoresMes = [78, 81, 83, 80, 82];
 
-                    const statusTipo3 = ultimaUmidadeSimulada > 75 ? "alerta" : "ok";
-                    const statusTexto3 = ultimaUmidadeSimulada > 75 ? "ALERTA" : "IDEAL";
+                    const statusTipo3 = ultimaUmidadeSimulada >= 75 ? "alerta" : "ok";
+                    const statusTexto3 = ultimaUmidadeSimulada >= 75 ? "ALERTA" : "IDEAL";
                     const descStatus3 = ultimaUmidadeSimulada > 75 ? "Solo encharcado, reduzir irrigação" : "Faixa estável";
 
                     kpisHTML = `

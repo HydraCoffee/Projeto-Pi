@@ -16,7 +16,7 @@ body::before{
     left: 0;
     width: 100%;
     height: 100%;
-    background: url("../img/delicious-organic-coffee-still-life.jpg") no-repeat center center/cover;    z-index: -2;
+    background: url("../assets/img/delicious-organic-coffee-still-life.jpg") no-repeat center center/cover;    z-index: -2;
 }
 
 body::after{
@@ -33,20 +33,87 @@ body::after{
 }
 
 header{
-    display: flex;
+display: flex;
     background-color: #703618;
-    padding: 15px 35px;
+    color: white;
+    padding: 0px 40px;
+    height: 70px;
     align-items: center;
     justify-content: space-between;
-    min-height: 100px;
-    position: relative;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.Logo{
+    flex: 1;
+    display: flex;
+    align-items: center;
 }
 
 .Logo img{
     display: flex;
+    background: none;
+    flex: 2;
+    padding: 10px;
+    text-align: center;
+    gap: 20px;
+    justify-content: center;
     width: 200px;
-    margin-right: 100px;
-    margin-top: -20px;
+    height: auto;
+}
+
+nav a {
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    padding-bottom: 5px;
+    position: relative;
+    font-family: 'DM Serif Display', serif !important;
+    font-size: 18px;
+}
+nav {
+display: flex;
+background: none;
+flex: 2;
+padding: 10px;
+text-align: center;
+gap: 20px;
+justify-content: center;
+margin-left: 0;
+
+}
+
+nav a:hover{
+color: #8E991B;
+transition: 0.5s ease;
+cursor: pointer;
+}
+
+nav a:hover::after{
+width: 100%;
+}
+
+nav a::after{
+content: "";
+position: absolute;
+width: 0;
+height: 2px;
+left: 0;
+bottom: 0;
+background: #8E991B;
+transition: width 0.3s ease;
+}
+
+.Cadastro {
+    flex: 1;
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+    align-items: center;
 }
 
 .logo-titulo{
