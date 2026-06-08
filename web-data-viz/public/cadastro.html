@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -17,6 +18,10 @@
 
 <body onload="listar()">
 
+  <a href="./index.html" class="botao-voltar-pagina">
+    Voltar para a página inicial
+  </a>
+
   <main class="pagina-cadastro">
 
     <section class="card-cadastro-principal">
@@ -35,7 +40,7 @@
         </div>
 
         <div class="caixa-cadastro">
-          <h2>Crie sua conta 🌱</h2>
+          <h2>Crie sua conta</h2>
 
           <p class="subtitulo">
             Cadastre-se para acessar os dados de umidade e acompanhar sua plantação.
@@ -55,7 +60,7 @@
 
             <div class="campo">
               <span>E-mail</span>
-              <input id="email_input" type="text" placeholder="meuemail@provedor.com" />
+              <input id="email_input" type="email" placeholder="meuemail@provedor.com" />
             </div>
 
             <div class="campo">
@@ -119,6 +124,12 @@
       return false;
     }
 
+    if (!emailVar.includes("@")) {
+      cardErro.style.display = "block";
+      mensagem_erro.innerHTML = "Digite um e-mail válido.";
+      return false;
+    }
+
     if (senhaVar != confirmacaoSenhaVar) {
       cardErro.style.display = "block";
       mensagem_erro.innerHTML = "As senhas não coincidem.";
@@ -136,16 +147,16 @@
     var codigoValido = false;
 
     for (let i = 0; i < listaEmpresasCadastradas.length; i++) {
-      if (listaEmpresasCadastradas[i].codigo == codigoVar) { 
-        
-        idEmpresaVincular = listaEmpresasCadastradas[i].idEmpresa; 
-        
+      if (listaEmpresasCadastradas[i].codigo == codigoVar) {
+
+        idEmpresaVincular = listaEmpresasCadastradas[i].idEmpresa;
+
         codigoValido = true;
         console.log("Código de ativação válido.");
         break;
       }
     }
-    
+
     if (codigoValido == false) {
       cardErro.style.display = "block";
       mensagem_erro.innerHTML = "Código de ativação inválido.";
@@ -181,6 +192,9 @@
       })
       .catch(function (resposta) {
         console.log(`#ERRO: ${resposta}`);
+
+        cardErro.style.display = "block";
+        mensagem_erro.innerHTML = "Não foi possível realizar o cadastro.";
       });
 
     return false;
@@ -206,3 +220,4 @@
     cardErro.style.display = "none";
   }
 </script>
+```

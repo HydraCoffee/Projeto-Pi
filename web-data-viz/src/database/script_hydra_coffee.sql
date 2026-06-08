@@ -100,3 +100,38 @@ VALUES
 SELECT f.*, e.codigo FROM funcionario f
 JOIN empresa e ON f.fkEmpresa = e.idEmpresa
 ;
+-- Essa view reúne as medições dos sensores
+-- vinculados aos setores de uma empresa.
+-- Pra dashboard.
+
+
+CREATE VIEW vw_dados_gerais_empresa AS
+SELECT
+    m.idMedicao,
+    m.umidade,
+    m.dtHrMedicao,
+    DATE_FORMAT(m.dtHrMedicao, '%H:%i') AS momento_grafico,
+    s.talhao,
+    st.idSetor,
+    st.fkEmpresa AS idEmpresa
+FROM medicao AS m
+INNER JOIN sensor AS s
+    ON m.fkSensor = s.idsensor
+INNER JOIN setor AS st
+    ON s.fkSetor = st.idSetor;
+
+-- Essa view reúne as medições dos sensores
+-- de cada setor ou hectare.
+-- Ela serve para exibir os dados específicos de um setor na dashboard.
+
+CREATE VIEW vw_dados_hectare AS
+SELECT
+    m.idMedicao,
+    m.umidade,
+    m.dtHrMedicao,
+    DATE_FORMAT(m.dtHrMedicao, '%H:%i') AS momento_grafico,
+    s.talhao,
+    s.fkSetor AS idSetor
+FROM medicao AS m
+INNER JOIN sensor AS s
+    ON m.fkSensor = s.idsensor;

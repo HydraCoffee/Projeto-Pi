@@ -47,12 +47,12 @@ body {
 .marca {
   width: 100%;
   max-width: 380px;
-  margin: 0 auto 35px;
+  margin: 0 auto 25px;
 }
 
 .marca h1 {
   color: #703618;
-  font-size: 32px;
+  font-size: 40px;
   margin-bottom: 5px;
 }
 
@@ -125,7 +125,7 @@ body {
 .botao {
   width: 100%;
   height: 48px;
-  background-color: #1f2f2b;
+  background-color: #703618;
   color: white;
   border: none;
   border-radius: 8px;
@@ -137,7 +137,7 @@ body {
 }
 
 .botao:hover {
-  background-color: #703618;
+  background-color: #8E991B;
   transform: translateY(-2px);
 }
 
@@ -178,17 +178,6 @@ body {
   background-repeat: no-repeat;
 }
 
-.lado-imagem::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    rgba(112, 54, 24, 0.15),
-    rgba(0, 0, 0, 0.28)
-  );
-  z-index: 1;
-}
-
 .alerta_erro {
   display: flex;
   justify-content: center;
@@ -227,4 +216,23 @@ body {
 
 #div_erros_login {
   display: none;
+}
+
+.botao-voltar-pagina {
+  position: fixed;
+  top: 3%;
+  left: 2%;
+
+  padding: 10px 14px;
+  background-color: white;
+  color: #703618;
+
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.botao-voltar-pagina:hover {
+  background-color: #703618;
+  color: white;
 }

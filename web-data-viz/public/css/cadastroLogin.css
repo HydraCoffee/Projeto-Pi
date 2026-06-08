@@ -15,8 +15,6 @@ body {
   background-repeat: no-repeat;
 }
 
-/* PÁGINA PRINCIPAL */
-
 .pagina-login {
   width: 100%;
   min-height: 100vh;
@@ -25,8 +23,6 @@ body {
   align-items: center;
   justify-content: center;
 }
-
-/* CARD PRINCIPAL */
 
 .card-login-principal {
   width: 100%;
@@ -39,8 +35,6 @@ body {
   padding: 24px;
 }
 
-/* LADO DO FORMULÁRIO */
-
 .lado-formulario {
   width: 50%;
   padding: 45px 90px 25px;
@@ -48,8 +42,6 @@ body {
   flex-direction: column;
   justify-content: center;
 }
-
-/* MARCA */
 
 .marca {
   width: 100%;
@@ -69,8 +61,6 @@ body {
   font-weight: 700;
 }
 
-/* CAIXA DO LOGIN */
-
 .caixa-login {
   width: 100%;
   max-width: 380px;
@@ -89,8 +79,6 @@ body {
   line-height: 1.5;
   margin-bottom: 22px;
 }
-
-/* FORMULÁRIO */
 
 .formulario {
   width: 100%;
@@ -133,8 +121,6 @@ body {
   box-shadow: 0 0 0 3px rgba(142, 153, 27, 0.18);
 }
 
-/* BOTÃO */
-
 .botao {
   width: 100%;
   height: 48px;
@@ -171,8 +157,6 @@ body {
   color: #8E991B;
 }
 
-/* RODAPÉ DO LOGIN */
-
 .rodape-login {
   width: 100%;
   max-width: 380px;
@@ -181,8 +165,6 @@ body {
   color: #9aa8b2;
   font-size: 11px;
 }
-
-/* LADO DA IMAGEM */
 
 .lado-imagem {
   width: 50%;
@@ -193,4 +175,18 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+.botao-voltar-pagina {
+  position: fixed;
+  top: 3%;
+  left: 2%;
+
+  padding: 10px 14px;
+  background-color: white;
+  color: #703618;
+
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
 }

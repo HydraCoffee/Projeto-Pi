@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -19,9 +20,13 @@
 
       <div class="lado-formulario">
 
+        <a href="./index.html" class="botao-voltar-pagina">
+          Voltar para a página inicial
+        </a>
+
         <div class="marca">
           <h1>HydraCoffee</h1>
-          <p>A cafeicultura inteligente começa aqui!</p>
+          <p>Monitoramento Inteligente de Umidade</p>
         </div>
 
         <div class="caixa-login">
@@ -46,7 +51,7 @@
 
             <div class="campo">
               <span>Código</span>
-              <input type="text" id="codigo_input" placeholder="Digite seu código">
+              <input type="text" id="codigo_input" placeholder="Digite seu código se for ADMIN">
             </div>
 
             <input class="botao" type="button" value="Entrar" onclick="entrar(event)">
@@ -95,7 +100,7 @@
       body: JSON.stringify({
         emailServer: emailVar,
         senhaServer: senhaVar,
-        codigoServer: codigoVar 
+        codigoServer: codigoVar
       })
     }).then(function (resposta) {
       console.log("ESTOU NO THEN DO entrar()!")
@@ -105,31 +110,30 @@
 
         resposta.json().then(json => {
           console.log(JSON.stringify(json));
-          
 
           sessionStorage.EMAIL_USUARIO = json.email;
           sessionStorage.NOME_USUARIO = json.nome;
           sessionStorage.ID_USUARIO = json.id;
-          sessionStorage.ID_EMPRESA = json.fkEmpresa;
+          sessionStorage.FK_EMPRESA = json.fkEmpresa;
 
           alert(`Bem-vindo(a), ${json.nome}! Login realizado com sucesso.`);
-          
+
           setTimeout(function () {
-            if(json.tipo === 'admin'){
+            if (json.tipo === 'admin') {
               window.location = "http://localhost:4000";
-            }else{
-              window.location = "./dashboard.html"; 
+            } else {
+              window.location = "./dashboard.html";
             }
-            
-          }, 1000); 
+          }, 1000);
 
         });
 
       } else {
         console.log("Houve um erro ao tentar realizar o login!");
+
         resposta.text().then(texto => {
           console.error(texto);
-          alert(texto); 
+          alert(texto);
         });
       }
 
