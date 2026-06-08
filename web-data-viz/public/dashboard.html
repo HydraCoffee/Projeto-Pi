@@ -133,15 +133,12 @@
                 const valoresReais = dadosDoBanco.map(registro => registro.umidade);
                 const ultimaUmidadeReal = valoresReais[valoresReais.length - 1] || 0;
 
-                // Fallback: se a API retornar vazio, gera horas simuladas para os gráficos
                 if (horas.length === 0) {
                     for (let h = 6; h <= 18; h++) {
                         horas.push(`${String(h).padStart(2, '0')}:00`);
                     }
                 }
 
-                // Gera valores simulados com base na umidade real + variação aleatória
-                // Se não há dados reais, usa uma base fixa por hectare
                 function gerarSimulado(base, variacao) {
                     return horas.map((_, i) => {
                         const baseValor = valoresReais[i] !== undefined ? valoresReais[i] : base;
@@ -173,7 +170,6 @@
                         </div>
                     `;
                 } else if (id == 1) {
-                    // Base 70 (faixa ideal), variação de ±4
                     valoresFinaisGrafico = gerarSimulado(70, 4);
                     const ultimaUmidadeSimulada = valoresFinaisGrafico[valoresFinaisGrafico.length - 1];
                     valoresMes = [68, 70, 72, 69, 71];
@@ -191,7 +187,6 @@
                         </div>
                     `;
                 } else if (id == 2) {
-                    // Base 52 (solo seco), variação de ±7
                     valoresFinaisGrafico = gerarSimulado(52, 7);
                     const ultimaUmidadeSimulada = valoresFinaisGrafico[valoresFinaisGrafico.length - 1];
                     valoresMes = [55, 52, 50, 48, 51];
@@ -213,7 +208,6 @@
                         </div>
                     `;
                 } else if (id == 3) {
-                    // Base 80 (solo encharcado), variação de ±5
                     valoresFinaisGrafico = gerarSimulado(80, 5);
                     const ultimaUmidadeSimulada = valoresFinaisGrafico[valoresFinaisGrafico.length - 1];
                     valoresMes = [78, 81, 83, 80, 82];
