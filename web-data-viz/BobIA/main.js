@@ -16,14 +16,19 @@
     // configurando o servidor para receber requisições JSON
     app.use(express.json());
 
-    // configurando o servidor para servir arquivos estáticos
-
-    // configurando o servidor para servir arquivos estáticos
-app.use("/css", express.static(path.join(__dirname, "..", "public", "css")));
-
+    // rota principal — deve vir ANTES do express.static para ter prioridade sobre o index.html
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "..", "public", "bobia.html"));
 });
+
+    // rota de download do manual de instalação
+app.get("/manual", (req, res) => {
+    const arquivoManual = path.join(__dirname, "..", "public", "SafraControl_Manual_Instalacao.pdf");
+    res.download(arquivoManual, "SafraControl_Manual_Instalacao.pdf");
+});
+
+    // configurando o servidor para servir arquivos estáticos (css, assets, docx, etc.)
+app.use(express.static(path.join(__dirname, "..", "public")));
 
     // configurando CORS
     app.use((req, res, next) => {

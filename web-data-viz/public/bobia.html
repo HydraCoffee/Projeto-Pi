@@ -20,7 +20,11 @@
             </div>
 
             <button class="nav-item btn-manual" onclick="baixarManual()">
-                Baixar Manual
+                📄 Baixar Manual
+            </button>
+
+            <button class="nav-item btn-sair" onclick="sair()">
+                🚪 Sair
             </button>
         </nav>
 
@@ -36,6 +40,7 @@
         <div id="resposta"></div>
     </div>
 
+    <script src="./js/sessao.js"></script>
     <script>
 
         async function gerarResposta() {
@@ -57,9 +62,14 @@
 
         function baixarManual() {
             const link = document.createElement('a');
-            link.href = 'SafraControl_Manual_Instalacao.docx';
-            link.download = 'SafraControl_Manual_Instalacao.docx';
+            link.href = 'SafraControl_Manual_Instalacao.pdf';
+            link.download = 'SafraControl_Manual_Instalacao.pdf';
             link.click();
+        }
+
+        function sair() {
+            sessionStorage.clear();
+            window.location.href = './index.html';
         }
 
     </script>
